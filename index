@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Famílias em Jogo — Telão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --t1:#3b82f6;--t1-glow:rgba(59,130,246,.6);--t1-bg:rgba(59,130,246,.09);--t1-border:rgba(59,130,246,.45);
+  --t2:#ef4444;--t2-glow:rgba(239,68,68,.6);--t2-bg:rgba(239,68,68,.09);--t2-border:rgba(239,68,68,.45);
+  --gold:#f59e0b;--bg:#07090f;
+}
+html,body{width:100vw;height:100vh;overflow:hidden;font-family:'Montserrat',sans-serif;background:var(--bg);color:#fff;position:relative;}
+body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 70% at 18% 60%,rgba(59,130,246,.1) 0%,transparent 65%),radial-gradient(ellipse 55% 70% at 82% 60%,rgba(239,68,68,.1) 0%,transparent 65%);}
+#app{position:relative;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;}
+
+/* HEADER */
+#header{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:20px 0 0;position:relative;}
+#header::before,#header::after{content:'✦';position:absolute;top:26px;font-size:18px;color:var(--gold);opacity:.7;}
+#header::before{left:calc(50% - 240px);}#header::after{right:calc(50% - 240px);}
+#game-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,7vh,78px);letter-spacing:14px;color:#fff;line-height:1;text-shadow:0 0 40px rgba(255,255,255,.15);}
+#game-subtitle{font-size:clamp(11px,1.6vh,18px);font-weight:700;letter-spacing:18px;text-transform:uppercase;color:var(--gold);margin-top:2px;text-shadow:0 0 20px rgba(245,158,11,.5);}
+#header-deco{display:flex;align-items:center;gap:14px;margin-top:8px;width:42%;}
+.deco-line{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(245,158,11,.45));}
+.deco-line.r{background:linear-gradient(to left,transparent,rgba(245,158,11,.45));}
+.deco-diamond{width:7px;height:7px;flex-shrink:0;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 10px rgba(245,158,11,.9);}
+
+/* ROUND BAR */
+#round-bar{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:12px 0 10px;gap:8px;}
+#round-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6.5vh,72px);letter-spacing:10px;color:#fff;line-height:1;text-shadow:0 0 30px rgba(255,255,255,.25);}
+#round-deco{display:flex;align-items:center;gap:12px;width:36%;}
+#round-deco .rd-line{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.18));}
+#round-deco .rd-line.r{background:linear-gradient(to left,transparent,rgba(255,255,255,.18));}
+#round-deco .rd-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.35);flex-shrink:0;}
+
+/* SCORE AREA */
+#score-area{flex:1;display:flex;min-height:0;}
+.team-panel{flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;}
+#team1-panel{background:var(--t1-bg);}#team2-panel{background:var(--t2-bg);}
+.top-bar{height:3px;width:100%;flex-shrink:0;}
+#team1-panel .top-bar{background:linear-gradient(to right,var(--t1),rgba(59,130,246,.2),transparent);}
+#team2-panel .top-bar{background:linear-gradient(to left,var(--t2),rgba(239,68,68,.2),transparent);}
+#team1-panel::after{content:'';position:absolute;top:5%;bottom:5%;right:0;width:1px;background:linear-gradient(to bottom,transparent,var(--t1-border),transparent);}
+#team2-panel::before{content:'';position:absolute;top:5%;bottom:5%;left:0;width:1px;background:linear-gradient(to bottom,transparent,var(--t2-border),transparent);}
+.corner{position:absolute;width:36px;height:36px;}
+.corner.tl{top:14px;left:14px;border-top:2px solid;border-left:2px solid;}
+.corner.br{bottom:14px;right:14px;border-bottom:2px solid;border-right:2px solid;}
+#team1-panel .corner{border-color:rgba(59,130,246,.35);}
+#team2-panel .corner.tl{top:14px;right:14px;left:auto;border-top:2px solid;border-right:2px solid;border-left:none;}
+#team2-panel .corner.br{bottom:14px;left:14px;right:auto;border-bottom:2px solid;border-left:2px solid;border-right:none;}
+#team2-panel .corner{border-color:rgba(239,68,68,.35);}
+.panel-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;padding:16px 50px 24px;}
+.team-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8.5vh,92px);letter-spacing:6px;text-align:center;line-height:1;}
+#team1-panel .team-name{color:var(--t1);}#team2-panel .team-name{color:var(--t2);}
+.name-sep{width:80px;height:2px;margin-top:-4px;border-radius:2px;}
+#team1-panel .name-sep{background:linear-gradient(to right,transparent,var(--t1),transparent);}
+#team2-panel .name-sep{background:linear-gradient(to right,transparent,var(--t2),transparent);}
+.crown-zone{height:clamp(44px,8vh,88px);display:flex;align-items:center;justify-content:center;}
+.crown{font-size:clamp(44px,7.5vh,82px);opacity:0;transform:translateY(-18px) scale(.7);transition:opacity .7s cubic-bezier(.34,1.56,.64,1),transform .7s cubic-bezier(.34,1.56,.64,1);animation:crownFloat 2.8s ease-in-out infinite paused;filter:drop-shadow(0 0 16px gold) drop-shadow(0 0 40px rgba(255,215,0,.5));}
+.crown.show{opacity:1;transform:translateY(0) scale(1);animation-play-state:running;}
+@keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-12px) rotate(5deg);}}
+.score{font-family:'Bebas Neue',sans-serif;font-size:clamp(160px,40vh,440px);line-height:.85;letter-spacing:-4px;color:#fff;}
+#team1-panel .score{text-shadow:0 0 60px var(--t1-glow),0 0 120px rgba(59,130,246,.25),0 2px 0 rgba(0,0,0,.4);}
+#team2-panel .score{text-shadow:0 0 60px var(--t2-glow),0 0 120px rgba(239,68,68,.25),0 2px 0 rgba(0,0,0,.4);}
+.score.pop{animation:popScore .55s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popScore{0%{transform:scale(1);}40%{transform:scale(1.14);}100%{transform:scale(1);}}
+
+/* CENTER */
+#center-div{width:clamp(80px,7vw,160px);flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:2;}
+.center-line{width:1px;flex:1;max-height:150px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.08),transparent);}
+.vs-ring{width:clamp(54px,5.5vw,86px);height:clamp(54px,5.5vw,86px);border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.02);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,2vw,28px);letter-spacing:3px;color:rgba(255,255,255,.18);flex-shrink:0;}
+
+/* START SCREEN */
+#start-screen{position:fixed;inset:0;z-index:100;background:#07090f;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:opacity .6s ease;}
+#start-screen.hide{opacity:0;pointer-events:none;}
+#start-screen .ss-title{font-family:'Bebas Neue',sans-serif;font-size:80px;letter-spacing:10px;color:#fff;margin-bottom:12px;}
+#start-screen .ss-sub{font-size:18px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.35);}
+#start-screen .ss-pulse{margin-top:48px;width:70px;height:70px;border-radius:50%;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:28px;animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);border-color:rgba(255,255,255,.2);}50%{transform:scale(1.1);border-color:rgba(255,255,255,.5);}}
+
+/* CANVAS */
+#canvas{position:absolute;inset:0;pointer-events:none;z-index:10;}
+
+/* OVERLAYS */
+.overlay{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s ease;}
+.overlay.active{opacity:1;pointer-events:all;}
+#ov-transition{background:var(--bg);}
+.ov-eyebrow{font-size:clamp(14px,2vh,22px);font-weight:700;letter-spacing:12px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px;}
+.ov-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,14vh,160px);letter-spacing:8px;text-align:center;padding:0 80px;color:#fff;line-height:1;}
+.slide-in{animation:slideIn .8s cubic-bezier(.22,1,.36,1) forwards;}
+@keyframes slideIn{from{opacity:0;transform:translateY(50px) scale(.85);}to{opacity:1;transform:translateY(0) scale(1);}}
+#ov-lightning{background:#000;}
+.flash-bg{position:absolute;inset:0;animation:flashBg .18s infinite alternate;}
+@keyframes flashBg{from{background:rgba(255,220,0,.04);}to{background:rgba(255,220,0,.14);}}
+.bolt-svg{position:absolute;inset:0;width:100%;height:100%;}
+.bolt-path{fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.b1{stroke:#ffd700;stroke-width:5;animation:bA .38s 0s infinite;}.b2{stroke:rgba(255,255,255,.9);stroke-width:3;animation:bA .38s .08s infinite;}
+.b3{stroke:#ffd700;stroke-width:4;animation:bA .38s .16s infinite;}.b4{stroke:rgba(255,255,255,.7);stroke-width:3;animation:bA .38s .22s infinite;}
+.b5{stroke:#ffe566;stroke-width:6;animation:bA .38s .05s infinite;}
+@keyframes bA{0%,42%,100%{opacity:0;}15%,32%{opacity:1;}}
+.lightning-main{position:relative;z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center;}
+.bolt-icon{font-size:clamp(60px,10vh,100px);animation:boltB .28s infinite;}
+@keyframes boltB{0%,100%{transform:scale(1) rotate(-3deg);filter:drop-shadow(0 0 20px gold);}50%{transform:scale(1.12) rotate(3deg);filter:drop-shadow(0 0 60px gold) drop-shadow(0 0 120px gold);}}
+.lightning-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(70px,12vh,130px);letter-spacing:8px;color:#ffd700;line-height:1;animation:textGlow .28s infinite alternate;}
+@keyframes textGlow{from{text-shadow:0 0 30px rgba(255,215,0,.5);}to{text-shadow:0 0 80px rgba(255,215,0,1),0 0 160px rgba(255,215,0,.5);}}
+.lightning-sub{font-size:clamp(18px,3vh,32px);font-weight:700;letter-spacing:14px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:12px;}
+#ov-challenge{background:rgba(0,4,10,.97);}
+.ch-label{font-size:clamp(16px,2.5vh,28px);font-weight:700;letter-spacing:8px;text-transform:uppercase;color:var(--gold);margin-bottom:48px;}
+.ch-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,11vh,120px);letter-spacing:4px;text-align:center;color:#fff;line-height:1.15;max-width:80%;}
+.appear{animation:appear .7s cubic-bezier(.34,1.56,.64,1) forwards;}
+@keyframes appear{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+
+/* VERSE OVERLAY */
+#ov-versiculo{background:var(--bg);flex-direction:column;justify-content:flex-start;align-items:stretch;overflow:hidden;}
+.vs-wrap{flex:1;display:flex;flex-direction:column;padding:24px 80px 16px;min-height:0;position:relative;}
+.vs-header{text-align:center;margin-bottom:18px;flex-shrink:0;}
+.vs-round-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6.5vh,70px);letter-spacing:10px;color:#fff;line-height:1;margin-bottom:10px;}
+.vs-team-badge{display:inline-block;padding:7px 26px;border-radius:30px;font-size:clamp(13px,2vh,20px);font-weight:700;letter-spacing:4px;text-transform:uppercase;}
+.vs-team-badge.t1{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.4);color:#60a5fa;}
+.vs-team-badge.t2{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#f87171;}
+.vs-section-label{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.25);text-align:center;margin-bottom:12px;flex-shrink:0;}
+.vs-scrambled{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;flex-shrink:0;margin-bottom:8px;}
+.vs-word-card{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 16px;animation:wordAppear .3s ease;}
+@keyframes wordAppear{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+.vs-word-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3.2vh,38px);letter-spacing:2px;color:#fff;}
+.vs-divider{width:50%;height:1px;margin:10px auto;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);flex-shrink:0;}
+.vs-phrase{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:50px;flex-shrink:0;}
+.vs-phrase-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3.2vh,38px);letter-spacing:2px;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:7px 14px;animation:wordAppear .25s ease;}
+.vs-phrase-empty{color:rgba(255,255,255,.2);font-size:16px;align-self:center;letter-spacing:2px;}
+.vs-result{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;background:rgba(0,0,0,.72);}
+.vs-result.show{opacity:1;}
+.vs-stamp{font-family:'Bebas Neue',sans-serif;font-size:clamp(70px,13vh,150px);letter-spacing:6px;text-align:center;animation:stampIn .5s cubic-bezier(.34,1.56,.64,1);}
+.vs-stamp.correct{color:#22c55e;text-shadow:0 0 60px rgba(34,197,94,.9),0 0 120px rgba(34,197,94,.4);}
+.vs-stamp.wrong{color:#ef4444;text-shadow:0 0 60px rgba(239,68,68,.9),0 0 120px rgba(239,68,68,.4);}
+@keyframes stampIn{from{transform:scale(2.5) rotate(-8deg);opacity:0;}to{transform:scale(1) rotate(0deg);opacity:1;}}
+.vs-banner{flex-shrink:0;background:rgba(185,28,28,.92);padding:16px 80px;text-align:center;transform:translateY(100%);transition:transform .5s cubic-bezier(.22,1,.36,1);}
+.vs-banner.show{transform:translateY(0);}
+.vs-banner-label{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:5px;}
+.vs-banner-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4.2vh,50px);letter-spacing:3px;color:#fff;line-height:1.2;}
+</style>
+</head>
+<body>
+
+<div id="start-screen" onclick="startGame()">
+  <div class="ss-title">Famílias em Jogo</div>
+  <div class="ss-sub">Clique para iniciar</div>
+  <div class="ss-pulse">▶</div>
+</div>
+
+<div id="app">
+  <div id="header">
+    <div id="game-title">Famílias em Jogo</div>
+    <div id="game-subtitle">O Grande Desafio</div>
+    <div id="header-deco">
+      <div class="deco-line"></div><div class="deco-diamond"></div><div class="deco-line r"></div>
+    </div>
+  </div>
+  <div id="round-bar">
+    <div id="round-name">—</div>
+    <div id="round-deco"><div class="rd-line"></div><div class="rd-dot"></div><div class="rd-line r"></div></div>
+  </div>
+  <div id="score-area">
+    <div class="team-panel" id="team1-panel">
+      <div class="top-bar"></div><div class="corner tl"></div><div class="corner br"></div>
+      <div class="panel-body">
+        <div class="team-name" id="team1-name">Equipe 1</div>
+        <div class="name-sep"></div>
+        <div class="crown-zone"><div class="crown" id="crown1">👑</div></div>
+        <div class="score" id="score1">0</div>
+      </div>
+    </div>
+    <div id="center-div">
+      <div class="center-line"></div><div class="vs-ring">VS</div><div class="center-line"></div>
+    </div>
+    <div class="team-panel" id="team2-panel">
+      <div class="top-bar"></div><div class="corner tl"></div><div class="corner br"></div>
+      <div class="panel-body">
+        <div class="team-name" id="team2-name">Equipe 2</div>
+        <div class="name-sep"></div>
+        <div class="crown-zone"><div class="crown" id="crown2">👑</div></div>
+        <div class="score" id="score2">0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<canvas id="canvas"></canvas>
+
+<div class="overlay" id="ov-transition">
+  <div class="ov-eyebrow">Nova Rodada</div>
+  <div class="ov-big" id="transition-name">—</div>
+</div>
+
+<div class="overlay" id="ov-lightning">
+  <div class="flash-bg"></div>
+  <svg class="bolt-svg" viewBox="0 0 3330 1080" preserveAspectRatio="none">
+    <polyline class="bolt-path b1" points="180,0 140,280 210,280 160,560 230,560 190,1080"/>
+    <polyline class="bolt-path b2" points="3140,0 3100,240 3160,240 3110,500 3170,500 3130,1080"/>
+    <polyline class="bolt-path b3" points="560,0 520,190 590,190 540,420 610,420 570,900"/>
+    <polyline class="bolt-path b4" points="2740,0 2700,170 2760,170 2710,380 2780,380 2740,820"/>
+    <polyline class="bolt-path b5" points="1560,0 1510,330 1600,330 1545,660 1610,660 1570,1080"/>
+  </svg>
+  <div class="lightning-main">
+    <div class="bolt-icon">⚡</div>
+    <div class="lightning-title">Desafio Relâmpago</div>
+    <div class="lightning-sub">Prepare-se!</div>
+  </div>
+</div>
+
+<div class="overlay" id="ov-challenge">
+  <div class="ch-label">⚡ Desafio Relâmpago ⚡</div>
+  <div class="ch-text" id="ch-text">—</div>
+</div>
+
+<div class="overlay" id="ov-versiculo">
+  <div class="vs-wrap">
+    <div class="vs-header">
+      <div class="vs-round-title" id="vs-round-title">—</div>
+      <div class="vs-team-badge t1" id="vs-team-badge">Equipe 1 respondendo</div>
+    </div>
+    <div class="vs-section-label">Palavras embaralhadas</div>
+    <div class="vs-scrambled" id="vs-scrambled"></div>
+    <div class="vs-divider"></div>
+    <div class="vs-section-label">Frase sendo formada</div>
+    <div class="vs-phrase" id="vs-phrase"><span class="vs-phrase-empty">aguardando seleção...</span></div>
+    <div class="vs-result" id="vs-result"></div>
+  </div>
+  <div class="vs-banner" id="vs-banner">
+    <div class="vs-banner-label">Versículo correto</div>
+    <div class="vs-banner-text" id="vs-banner-text"></div>
+  </div>
+</div>
+
+<audio id="buzina" src="buzina.mpeg" preload="auto"></audio>
+<audio id="snd-acerto" src="Acerto.mpeg" preload="auto"></audio>
+<audio id="snd-erro" src="Erro.mpeg" preload="auto"></audio>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCflyQ_EzE2ExAvGPxA-ydLo8jEmgJUKv4",
+  authDomain: "passa-repassa-rede-casais.firebaseapp.com",
+  projectId: "passa-repassa-rede-casais",
+  storageBucket: "passa-repassa-rede-casais.firebasestorage.app",
+  messagingSenderId: "738516578995",
+  appId: "1:738516578995:web:8b1557de5546f1a208f6c6"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ── AUDIO ──────────────────────────────────────
+let audioUnlocked = false;
+function startGame() {
+  const sc = document.getElementById('start-screen');
+  sc.classList.add('hide');
+  setTimeout(() => sc.style.display = 'none', 700);
+  ['buzina','snd-acerto','snd-erro'].forEach(id => {
+    const a = document.getElementById(id);
+    a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {});
+  });
+  audioUnlocked = true;
+}
+function playSound(id) {
+  if (!audioUnlocked) return;
+  const a = document.getElementById(id);
+  a.currentTime = 0;
+  a.play().catch(() => {});
+}
+
+// ── CANVAS / PARTICLES ─────────────────────────
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+  constructor(x,y,colors){
+    this.x=x;this.y=y;this.vx=(Math.random()-.5)*24;this.vy=-(Math.random()*18+8);
+    this.life=1;this.decay=Math.random()*.016+.01;this.size=Math.random()*14+6;
+    this.color=colors[Math.floor(Math.random()*colors.length)];
+    this.gravity=.55;this.rot=Math.random()*Math.PI*2;this.rotS=(Math.random()-.5)*.25;
+    this.shape=Math.random()>.5?'star':'rect';
+  }
+  update(){this.x+=this.vx;this.vy+=this.gravity;this.y+=this.vy;this.life-=this.decay;this.vx*=.98;this.rot+=this.rotS;}
+  draw(){
+    if(this.life<=0)return;
+    ctx.save();ctx.globalAlpha=this.life;ctx.fillStyle=this.color;
+    ctx.translate(this.x,this.y);ctx.rotate(this.rot);
+    if(this.shape==='star'){
+      ctx.beginPath();
+      for(let i=0;i<10;i++){const r=i%2===0?this.size:this.size*.4;const a=(i*Math.PI)/5-Math.PI/2;i===0?ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}
+      ctx.closePath();ctx.fill();
+    } else {ctx.fillRect(-this.size/2,-this.size/4,this.size,this.size/2);}
+    ctx.restore();
+  }
+}
+let particles=[],rafId=null;
+function burst(x,y,colors){
+  for(let i=0;i<130;i++)particles.push(new Particle(x+(Math.random()-.5)*160,y,colors));
+  if(!rafId)animLoop();
+}
+function animLoop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles=particles.filter(p=>p.life>0);
+  particles.forEach(p=>{p.update();p.draw();});
+  if(particles.length>0)rafId=requestAnimationFrame(animLoop);
+  else{rafId=null;ctx.clearRect(0,0,canvas.width,canvas.height);}
+}
+function scoreEffect(team){
+  const el=document.getElementById('score'+team);
+  const rect=el.getBoundingClientRect();
+  el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');
+  setTimeout(()=>el.classList.remove('pop'),600);
+  const c=team===1?['#60a5fa','#93c5fd','#fff','#ffd700','#3b82f6']:['#f87171','#fca5a5','#fff','#ffd700','#ef4444'];
+  burst(rect.left+rect.width/2, rect.top+rect.height/2, c);
+}
+
+// ── VERSE SCREEN ───────────────────────────────
+let lastVsPhase = null;
+function renderVerseScreen(s) {
+  const vs = s.versiculoState;
+  if (!vs || !vs.active) return;
+  const rounds = s.rounds || [];
+  const round = rounds[s.currentRoundIndex ?? 0];
+  document.getElementById('vs-round-title').textContent = round?.name || '—';
+  const t = vs.activeTeam || 1;
+  const tName = t===1 ? (s.team1Name||'Equipe 1') : (s.team2Name||'Equipe 2');
+  const badge = document.getElementById('vs-team-badge');
+  badge.textContent = tName + ' respondendo';
+  badge.className = 'vs-team-badge t' + t;
+  document.getElementById('vs-scrambled').innerHTML = (vs.scrambled||[]).map(w =>
+    '<div class="vs-word-card"><span class="vs-word-text">'+w.word+'</span></div>'
+  ).join('') || '';
+  document.getElementById('vs-phrase').innerHTML = (vs.selected||[]).map(w =>
+    '<div class="vs-phrase-word">'+w.word+'</div>'
+  ).join('') || '<span class="vs-phrase-empty">aguardando seleção...</span>';
+
+  const phaseKey = (vs.phase||'') + '-' + (vs.verseIndex||0) + '-' + (vs.vsTs||0);
+  if (phaseKey !== lastVsPhase) {
+    lastVsPhase = phaseKey;
+    const resultEl = document.getElementById('vs-result');
+    const bannerEl = document.getElementById('vs-banner');
+    if (vs.phase === 'correct') {
+      resultEl.innerHTML = '<div class="vs-stamp correct">✓ CORRETO!</div>';
+      resultEl.classList.add('show');
+      bannerEl.classList.remove('show');
+      scoreEffect(t);
+      playSound('snd-acerto');
+    } else if (vs.phase === 'wrong') {
+      resultEl.innerHTML = '<div class="vs-stamp wrong">✗ ERRADO!</div>';
+      resultEl.classList.add('show');
+      playSound('snd-erro');
+      const verse = round?.verses?.[vs.verseIndex];
+      if (verse) { document.getElementById('vs-banner-text').textContent = verse.text; bannerEl.classList.add('show'); }
+    } else {
+      resultEl.classList.remove('show'); resultEl.innerHTML = '';
+      bannerEl.classList.remove('show');
+    }
+  }
+}
+
+// ── MAIN LISTENER ──────────────────────────────
+let lastScoreTs=0, lastScreen=null, transTimer=null;
+
+db.doc('game/state').onSnapshot(snap => {
+  if (!snap.exists) return;
+  const s = snap.data();
+
+  document.getElementById('team1-name').textContent = s.team1Name||'Equipe 1';
+  document.getElementById('team2-name').textContent = s.team2Name||'Equipe 2';
+  document.getElementById('score1').textContent = s.team1Score??0;
+  document.getElementById('score2').textContent = s.team2Score??0;
+
+  const s1=s.team1Score??0, s2=s.team2Score??0;
+  document.getElementById('crown1').classList.toggle('show', s1>s2);
+  document.getElementById('crown2').classList.toggle('show', s2>s1);
+
+  const ev = s.lastScoreEvent;
+  if (ev && ev.ts && ev.ts !== lastScoreTs) { lastScoreTs=ev.ts; scoreEffect(ev.team); }
+
+  const rounds = s.rounds||[];
+  const idx = s.currentRoundIndex??0;
+  document.getElementById('round-name').textContent = rounds[idx]?.name||'—';
+
+  const screen = s.screen||'placar';
+
+  if (screen === 'versiculo') renderVerseScreen(s);
+
+  if (screen !== lastScreen) {
+    lastScreen = screen;
+    ['ov-transition','ov-lightning','ov-challenge','ov-versiculo'].forEach(id =>
+      document.getElementById(id).classList.remove('active')
+    );
+    if (screen === 'transicao') {
+      const el = document.getElementById('transition-name');
+      el.textContent = rounds[idx]?.name||'—';
+      el.classList.remove('slide-in'); void el.offsetWidth; el.classList.add('slide-in');
+      document.getElementById('ov-transition').classList.add('active');
+      if (transTimer) clearTimeout(transTimer);
+      transTimer = setTimeout(() => db.doc('game/state').update({screen:'placar'}), 3800);
+    } else if (screen === 'relampago1') {
+      document.getElementById('ov-lightning').classList.add('active');
+      playSound('buzina');
+    } else if (screen === 'relampago2') {
+      const ch = s.activeChallenge;
+      if (ch) {
+        const el = document.getElementById('ch-text');
+        el.textContent = ch.text;
+        el.classList.remove('appear'); void el.offsetWidth; el.classList.add('appear');
+      }
+      document.getElementById('ov-challenge').classList.add('active');
+    } else if (screen === 'versiculo') {
+      document.getElementById('ov-versiculo').classList.add('active');
+      lastVsPhase = null;
+    }
+  }
+}, err => console.error('Firebase error:', err));
+</script>
+</body>
+</html>
