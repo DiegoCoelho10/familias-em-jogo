@@ -394,6 +394,14 @@ const familyVerses = [
   '"O amor é paciente, o amor é bondoso" — 1 Coríntios 13:4',
   '"Honra a teu pai e a tua mãe" — Êxodo 20:12',
   '"O amor nunca falha" — 1 Coríntios 13:8',
+  '"Se alguém não cuida dos seus, negou a fé" — 1 Timóteo 5:8',
+  '"Melhor é o fim de alguma coisa do que o seu princípio" — Eclesiastes 7:8',
+  '"Dois são melhor do que um" — Eclesiastes 4:9',
+  '"O amor cobre multidão de pecados" — 1 Pedro 4:8',
+  '"A família que ora unida, permanece unida" — provérbio cristão',
+  '"Suportem uns aos outros com amor" — Efésios 4:2',
+  '"Deus coloca os solitários em famílias" — Salmos 68:6',
+  '"A casa dos justos tem grande tesouro" — Provérbios 15:6',
 ];
 const loadFiles = [
   'rodadas.json .............. carregando',
@@ -432,7 +440,7 @@ function startLoadingAnimation() {
       // Advance to placar after 1.5s more
       setTimeout(()=>db.doc('game/state').update({screen:'placar'}),1500);
     }
-  }, 1100);
+  }, 1800);
 }
 
 // ── VERSE SCREEN ───────────────────────────────
