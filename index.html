@@ -15,7 +15,9 @@
   --gold:#f59e0b;--bg:#07090f;
 }
 html,body{width:100vw;height:100vh;overflow:hidden;font-family:'Montserrat',sans-serif;background:var(--bg);color:#fff;position:relative;}
-body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 55% 70% at 18% 60%,rgba(59,130,246,.1) 0%,transparent 65%),radial-gradient(ellipse 55% 70% at 82% 60%,rgba(239,68,68,.1) 0%,transparent 65%);}
+body::before{content:'';position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse 55% 70% at 18% 60%,rgba(59,130,246,.1) 0%,transparent 65%),
+             radial-gradient(ellipse 55% 70% at 82% 60%,rgba(239,68,68,.1) 0%,transparent 65%);}
 #app{position:relative;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;}
 
 /* HEADER */
@@ -39,8 +41,13 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 
 /* SCORE AREA */
 #score-area{flex:1;display:flex;min-height:0;}
-.team-panel{flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;}
+.team-panel{flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;transition:background .4s;}
 #team1-panel{background:var(--t1-bg);}#team2-panel{background:var(--t2-bg);}
+.team-panel.scored{animation:scoredPulse .8s ease;}
+#team1-panel.scored{animation:scoredPulse1 .8s ease;}
+#team2-panel.scored{animation:scoredPulse2 .8s ease;}
+@keyframes scoredPulse1{0%{background:var(--t1-bg);}40%{background:rgba(59,130,246,.28);}100%{background:var(--t1-bg);}}
+@keyframes scoredPulse2{0%{background:var(--t2-bg);}40%{background:rgba(239,68,68,.28);}100%{background:var(--t2-bg);}}
 .top-bar{height:3px;width:100%;flex-shrink:0;}
 #team1-panel .top-bar{background:linear-gradient(to right,var(--t1),rgba(59,130,246,.2),transparent);}
 #team2-panel .top-bar{background:linear-gradient(to left,var(--t2),rgba(239,68,68,.2),transparent);}
@@ -53,7 +60,7 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 #team2-panel .corner.tl{top:14px;right:14px;left:auto;border-top:2px solid;border-right:2px solid;border-left:none;}
 #team2-panel .corner.br{bottom:14px;left:14px;right:auto;border-bottom:2px solid;border-left:2px solid;border-right:none;}
 #team2-panel .corner{border-color:rgba(239,68,68,.35);}
-.panel-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;padding:16px 50px 24px;}
+.panel-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,2vh,24px);padding:clamp(10px,2vh,24px) clamp(20px,4vw,50px);min-height:0;overflow:hidden;}
 .team-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,8.5vh,92px);letter-spacing:6px;text-align:center;line-height:1;}
 #team1-panel .team-name{color:var(--t1);}#team2-panel .team-name{color:var(--t2);}
 .name-sep{width:80px;height:2px;margin-top:-4px;border-radius:2px;}
@@ -63,7 +70,7 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 .crown{font-size:clamp(44px,7.5vh,82px);opacity:0;transform:translateY(-18px) scale(.7);transition:opacity .7s cubic-bezier(.34,1.56,.64,1),transform .7s cubic-bezier(.34,1.56,.64,1);animation:crownFloat 2.8s ease-in-out infinite paused;filter:drop-shadow(0 0 16px gold) drop-shadow(0 0 40px rgba(255,215,0,.5));}
 .crown.show{opacity:1;transform:translateY(0) scale(1);animation-play-state:running;}
 @keyframes crownFloat{0%,100%{transform:translateY(0) rotate(-5deg);}50%{transform:translateY(-12px) rotate(5deg);}}
-.score{font-family:'Bebas Neue',sans-serif;font-size:clamp(160px,40vh,440px);line-height:.85;letter-spacing:-4px;color:#fff;}
+.score{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,32vh,440px);line-height:.85;letter-spacing:-4px;color:#fff;flex-shrink:1;}
 #team1-panel .score{text-shadow:0 0 60px var(--t1-glow),0 0 120px rgba(59,130,246,.25),0 2px 0 rgba(0,0,0,.4);}
 #team2-panel .score{text-shadow:0 0 60px var(--t2-glow),0 0 120px rgba(239,68,68,.25),0 2px 0 rgba(0,0,0,.4);}
 .score.pop{animation:popScore .55s cubic-bezier(.34,1.56,.64,1);}
@@ -88,11 +95,35 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 /* OVERLAYS */
 .overlay{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .5s ease;}
 .overlay.active{opacity:1;pointer-events:all;}
+
+/* INICIO */
+#ov-inicio{background:var(--bg);}
+.inicio-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,13vh,160px);letter-spacing:14px;color:#fff;text-align:center;text-shadow:0 0 60px rgba(255,255,255,.15);}
+.inicio-sub{font-size:clamp(13px,2vh,22px);font-weight:700;letter-spacing:18px;text-transform:uppercase;color:var(--gold);margin-top:8px;text-shadow:0 0 20px rgba(245,158,11,.5);}
+.inicio-pulse{margin-top:40px;font-size:clamp(14px,2vh,20px);font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.3);animation:inicioPulse 2s ease-in-out infinite;}
+@keyframes inicioPulse{0%,100%{opacity:.3;}50%{opacity:.8;}}
+
+/* LOADING */
+#ov-loading{background:var(--bg);}
+.load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;padding:60px;}
+.load-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,9vh,110px);letter-spacing:12px;color:#fff;margin-bottom:6px;text-align:center;}
+.load-sub{font-size:clamp(12px,1.8vh,20px);font-weight:700;letter-spacing:16px;text-transform:uppercase;color:var(--gold);margin-bottom:50px;}
+.load-bar-wrap{width:55%;height:5px;background:rgba(255,255,255,.1);border-radius:5px;margin-bottom:36px;overflow:hidden;}
+.load-bar{height:100%;background:linear-gradient(to right,var(--t1),var(--gold),var(--t2));border-radius:5px;width:0%;transition:width .8s ease;}
+.load-verse{font-size:clamp(16px,2.4vh,26px);font-weight:600;color:rgba(255,255,255,.55);text-align:center;max-width:70%;line-height:1.6;min-height:80px;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease;}
+.load-verse.fade{opacity:0;}
+.load-files{margin-top:28px;display:flex;flex-direction:column;gap:6px;width:55%;}
+.load-file{font-size:clamp(11px,1.5vh,15px);color:rgba(255,255,255,.2);letter-spacing:1px;font-family:monospace;opacity:0;transition:opacity .4s;}
+.load-file.show{opacity:1;}
+
+/* TRANSITION */
 #ov-transition{background:var(--bg);}
 .ov-eyebrow{font-size:clamp(14px,2vh,22px);font-weight:700;letter-spacing:12px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px;}
 .ov-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,14vh,160px);letter-spacing:8px;text-align:center;padding:0 80px;color:#fff;line-height:1;}
 .slide-in{animation:slideIn .8s cubic-bezier(.22,1,.36,1) forwards;}
 @keyframes slideIn{from{opacity:0;transform:translateY(50px) scale(.85);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+/* LIGHTNING */
 #ov-lightning{background:#000;}
 .flash-bg{position:absolute;inset:0;animation:flashBg .18s infinite alternate;}
 @keyframes flashBg{from{background:rgba(255,220,0,.04);}to{background:rgba(255,220,0,.14);}}
@@ -108,32 +139,34 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 .lightning-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(70px,12vh,130px);letter-spacing:8px;color:#ffd700;line-height:1;animation:textGlow .28s infinite alternate;}
 @keyframes textGlow{from{text-shadow:0 0 30px rgba(255,215,0,.5);}to{text-shadow:0 0 80px rgba(255,215,0,1),0 0 160px rgba(255,215,0,.5);}}
 .lightning-sub{font-size:clamp(18px,3vh,32px);font-weight:700;letter-spacing:14px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:12px;}
+
+/* CHALLENGE */
 #ov-challenge{background:rgba(0,4,10,.97);}
 .ch-label{font-size:clamp(16px,2.5vh,28px);font-weight:700;letter-spacing:8px;text-transform:uppercase;color:var(--gold);margin-bottom:48px;}
-.ch-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,11vh,120px);letter-spacing:4px;text-align:center;color:#fff;line-height:1.15;max-width:80%;}
+.ch-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,8vh,100px);letter-spacing:4px;text-align:center;color:#fff;line-height:1.15;max-width:85%;word-break:break-word;}
 .appear{animation:appear .7s cubic-bezier(.34,1.56,.64,1) forwards;}
 @keyframes appear{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 
+/* PAUSED */
+#ov-paused{background:rgba(0,0,0,.85);backdrop-filter:blur(8px);}
+.pause-icon{font-size:clamp(60px,10vh,100px);margin-bottom:20px;animation:pausePulse 1.5s ease-in-out infinite;}
+@keyframes pausePulse{0%,100%{opacity:.7;}50%{opacity:1;}}
+.pause-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,14vh,160px);letter-spacing:12px;color:#fff;}
+.pause-sub{font-size:clamp(14px,2vh,22px);font-weight:600;letter-spacing:8px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:10px;}
 
-/* INICIO SCREEN */
-#ov-inicio{background:var(--bg);}
-.inicio-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,13vh,160px);letter-spacing:14px;color:#fff;line-height:1;text-shadow:0 0 60px rgba(255,255,255,.15);text-align:center;}
-.inicio-sub{font-size:clamp(13px,2vh,22px);font-weight:700;letter-spacing:18px;text-transform:uppercase;color:var(--gold);margin-top:8px;text-shadow:0 0 20px rgba(245,158,11,.5);}
-.inicio-pulse{margin-top:40px;font-size:clamp(14px,2vh,20px);font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.3);animation:inicioPulse 2s ease-in-out infinite;}
-@keyframes inicioPulse{0%,100%{opacity:.3;}50%{opacity:.8;}}
-
-/* LOADING SCREEN */
-#ov-loading{background:var(--bg);gap:0;}
-.load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;padding:60px;}
-.load-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,9vh,110px);letter-spacing:12px;color:#fff;margin-bottom:6px;text-align:center;}
-.load-sub{font-size:clamp(12px,1.8vh,20px);font-weight:700;letter-spacing:16px;text-transform:uppercase;color:var(--gold);margin-bottom:50px;text-shadow:0 0 20px rgba(245,158,11,.5);}
-.load-bar-wrap{width:55%;height:5px;background:rgba(255,255,255,.1);border-radius:5px;margin-bottom:36px;overflow:hidden;}
-.load-bar{height:100%;background:linear-gradient(to right,var(--t1),var(--gold),var(--t2));border-radius:5px;width:0%;transition:width .8s ease;}
-.load-verse{font-size:clamp(16px,2.4vh,26px);font-weight:600;color:rgba(255,255,255,.55);text-align:center;max-width:70%;line-height:1.6;min-height:80px;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease;}
-.load-verse.fade{opacity:0;}
-.load-files{margin-top:28px;display:flex;flex-direction:column;gap:6px;width:55%;}
-.load-file{font-size:clamp(11px,1.5vh,15px);color:rgba(255,255,255,.2);letter-spacing:1px;font-family:monospace;opacity:0;transition:opacity .4s;}
-.load-file.show{opacity:1;}
+/* WINNER */
+#ov-winner{background:var(--bg);overflow:hidden;}
+.winner-rays{position:absolute;inset:0;background:conic-gradient(from 0deg,transparent 0deg,rgba(245,158,11,.06) 10deg,transparent 20deg);animation:raysSpin 8s linear infinite;}
+@keyframes raysSpin{to{transform:rotate(360deg);}}
+.winner-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
+.winner-eyebrow{font-size:clamp(14px,2vh,22px);font-weight:700;letter-spacing:12px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;animation:fadeSlideIn .8s ease forwards;}
+.winner-crown{font-size:clamp(60px,10vh,120px);animation:fadeSlideIn .8s .1s ease forwards,crownFloat 2.8s 1s ease-in-out infinite;opacity:0;filter:drop-shadow(0 0 30px gold);}
+.winner-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,15vh,180px);letter-spacing:8px;text-align:center;animation:fadeSlideIn .8s .2s ease forwards;opacity:0;}
+.winner-name.t1{color:var(--t1);text-shadow:0 0 60px var(--t1-glow);}
+.winner-name.t2{color:var(--t2);text-shadow:0 0 60px var(--t2-glow);}
+.winner-score{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,7vh,90px);color:rgba(255,255,255,.6);letter-spacing:4px;margin-top:10px;animation:fadeSlideIn .8s .35s ease forwards;opacity:0;}
+.winner-tie{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,11vh,140px);letter-spacing:8px;color:var(--gold);animation:fadeSlideIn .8s .2s ease forwards;opacity:0;}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 
 /* VERSE OVERLAY */
 #ov-versiculo{background:var(--bg);flex-direction:column;justify-content:flex-start;align-items:stretch;overflow:hidden;}
@@ -145,15 +178,16 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 .vs-team-badge.t2{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#f87171;}
 .vs-section-label{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.25);text-align:center;margin-bottom:12px;flex-shrink:0;}
 .vs-scrambled{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;flex-shrink:0;margin-bottom:8px;overflow-y:auto;max-height:35vh;}
-.vs-word-card{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 16px;animation:wordAppear .3s ease;}
-@keyframes wordAppear{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+.vs-word-card{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 16px;opacity:0;animation:wordIn .4s ease forwards;}
+@keyframes wordIn{from{opacity:0;transform:translateY(12px) scale(.88);}to{opacity:1;transform:translateY(0) scale(1);}}
 .vs-word-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3.2vh,38px);letter-spacing:2px;color:#fff;}
 .vs-divider{width:50%;height:1px;margin:10px auto;background:linear-gradient(to right,transparent,rgba(255,255,255,.12),transparent);flex-shrink:0;}
 .vs-phrase{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:50px;flex-shrink:0;}
-.vs-phrase-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3.2vh,38px);letter-spacing:2px;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:7px 14px;animation:wordAppear .25s ease;}
+.vs-phrase-word{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3.2vh,38px);letter-spacing:2px;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:7px 14px;animation:wordIn .25s ease forwards;}
 .vs-phrase-empty{color:rgba(255,255,255,.2);font-size:16px;align-self:center;letter-spacing:2px;}
 .vs-result{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;background:rgba(0,0,0,.72);}
 .vs-result.show{opacity:1;}
+.vs-result.hide{opacity:0;}
 .vs-stamp{font-family:'Bebas Neue',sans-serif;font-size:clamp(70px,13vh,150px);letter-spacing:6px;text-align:center;animation:stampIn .5s cubic-bezier(.34,1.56,.64,1);}
 .vs-stamp.correct{color:#22c55e;text-shadow:0 0 60px rgba(34,197,94,.9),0 0 120px rgba(34,197,94,.4);}
 .vs-stamp.wrong{color:#ef4444;text-shadow:0 0 60px rgba(239,68,68,.9),0 0 120px rgba(239,68,68,.4);}
@@ -176,9 +210,7 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
   <div id="header">
     <div id="game-title">Famílias em Jogo</div>
     <div id="game-subtitle">O Grande Desafio</div>
-    <div id="header-deco">
-      <div class="deco-line"></div><div class="deco-diamond"></div><div class="deco-line r"></div>
-    </div>
+    <div id="header-deco"><div class="deco-line"></div><div class="deco-diamond"></div><div class="deco-line r"></div></div>
   </div>
   <div id="round-bar">
     <div id="round-name">—</div>
@@ -194,9 +226,7 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
         <div class="score" id="score1">0</div>
       </div>
     </div>
-    <div id="center-div">
-      <div class="center-line"></div><div class="vs-ring">VS</div><div class="center-line"></div>
-    </div>
+    <div id="center-div"><div class="center-line"></div><div class="vs-ring">VS</div><div class="center-line"></div></div>
     <div class="team-panel" id="team2-panel">
       <div class="top-bar"></div><div class="corner tl"></div><div class="corner br"></div>
       <div class="panel-body">
@@ -210,6 +240,22 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 </div>
 
 <canvas id="canvas"></canvas>
+
+<div class="overlay" id="ov-inicio">
+  <div class="inicio-title">Famílias em Jogo</div>
+  <div class="inicio-sub">O Grande Desafio</div>
+  <div class="inicio-pulse">Aguardando início...</div>
+</div>
+
+<div class="overlay" id="ov-loading">
+  <div class="load-wrap">
+    <div class="load-title">Famílias em Jogo</div>
+    <div class="load-sub">O Grande Desafio</div>
+    <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
+    <div class="load-verse" id="load-verse"></div>
+    <div class="load-files" id="load-files"></div>
+  </div>
+</div>
 
 <div class="overlay" id="ov-transition">
   <div class="ov-eyebrow">Nova Rodada</div>
@@ -237,21 +283,15 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
   <div class="ch-text" id="ch-text">—</div>
 </div>
 
-
-<div class="overlay" id="ov-inicio">
-  <div class="inicio-title">Famílias em Jogo</div>
-  <div class="inicio-sub">O Grande Desafio</div>
-  <div class="inicio-pulse">Aguardando início...</div>
+<div class="overlay" id="ov-paused">
+  <div class="pause-icon">⏸</div>
+  <div class="pause-title">Pausa</div>
+  <div class="pause-sub">O jogo está pausado</div>
 </div>
 
-<div class="overlay" id="ov-loading">
-  <div class="load-wrap">
-    <div class="load-title">Famílias em Jogo</div>
-    <div class="load-sub">O Grande Desafio</div>
-    <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
-    <div class="load-verse" id="load-verse"></div>
-    <div class="load-files" id="load-files"></div>
-  </div>
+<div class="overlay" id="ov-winner">
+  <div class="winner-rays"></div>
+  <div class="winner-content" id="winner-content"></div>
 </div>
 
 <div class="overlay" id="ov-versiculo">
@@ -286,36 +326,26 @@ const firebaseConfig = {
   messagingSenderId: "738516578995",
   appId: "1:738516578995:web:8b1557de5546f1a208f6c6"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// ── AUDIO ──────────────────────────────────────
-let audioUnlocked = false;
+// ── FULLSCREEN (always on after start) ────────────
+let gameStarted = false;
+let userRequestedExit = false;
+
 function enterFullscreen() {
   const el = document.documentElement;
   if (el.requestFullscreen) el.requestFullscreen();
   else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-  else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
 }
 
-document.addEventListener('fullscreenchange', () => {
-  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-    // Re-enter fullscreen if exited unintentionally (not from start screen)
-    const ss = document.getElementById('start-screen');
-    if (ss.style.display === 'none') {
-      setTimeout(() => enterFullscreen(), 800);
-    }
+['fullscreenchange','webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
+  const inFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  if (!inFs && gameStarted && !userRequestedExit) {
+    setTimeout(() => enterFullscreen(), 400);
   }
-});
-document.addEventListener('webkitfullscreenchange', () => {
-  if (!document.webkitFullscreenElement) {
-    const ss = document.getElementById('start-screen');
-    if (ss.style.display === 'none') {
-      setTimeout(() => enterFullscreen(), 800);
-    }
-  }
-});
+  userRequestedExit = false;
+}));
 
 function startGame() {
   const sc = document.getElementById('start-screen');
@@ -326,21 +356,57 @@ function startGame() {
     a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {});
   });
   audioUnlocked = true;
+  gameStarted = true;
   enterFullscreen();
 }
+
+// ── AUDIO ─────────────────────────────────────────
+let audioUnlocked = false;
+let audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playTone(freq, start, dur, vol=0.25) {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = freq; osc.type = 'sine';
+    gain.gain.setValueAtTime(vol, ctx.currentTime + start);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+    osc.start(ctx.currentTime + start);
+    osc.stop(ctx.currentTime + start + dur + 0.05);
+  } catch(e) {}
+}
+
+function playTransitionSound() {
+  if (!audioUnlocked) return;
+  playTone(523, 0,    0.15);
+  playTone(659, 0.16, 0.15);
+  playTone(784, 0.32, 0.3);
+}
+
+function playWinnerSound() {
+  if (!audioUnlocked) return;
+  [523,659,784,1047].forEach((f,i) => playTone(f, i*0.15, 0.25, 0.3));
+  setTimeout(() => [1047,1175,1319].forEach((f,i) => playTone(f, i*0.12, 0.22, 0.3)), 700);
+}
+
 function playSound(id) {
   if (!audioUnlocked) return;
   const a = document.getElementById(id);
-  a.currentTime = 0;
-  a.play().catch(() => {});
+  if (a) { a.currentTime = 0; a.play().catch(() => {}); }
 }
 
-// ── CANVAS / PARTICLES ─────────────────────────
+// ── CANVAS PARTICLES ──────────────────────────────
 const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+const ctx2d = canvas.getContext('2d');
 function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+resizeCanvas(); window.addEventListener('resize', resizeCanvas);
 
 class Particle {
   constructor(x,y,colors){
@@ -353,37 +419,47 @@ class Particle {
   update(){this.x+=this.vx;this.vy+=this.gravity;this.y+=this.vy;this.life-=this.decay;this.vx*=.98;this.rot+=this.rotS;}
   draw(){
     if(this.life<=0)return;
-    ctx.save();ctx.globalAlpha=this.life;ctx.fillStyle=this.color;
-    ctx.translate(this.x,this.y);ctx.rotate(this.rot);
+    ctx2d.save();ctx2d.globalAlpha=this.life;ctx2d.fillStyle=this.color;
+    ctx2d.translate(this.x,this.y);ctx2d.rotate(this.rot);
     if(this.shape==='star'){
-      ctx.beginPath();
-      for(let i=0;i<10;i++){const r=i%2===0?this.size:this.size*.4;const a=(i*Math.PI)/5-Math.PI/2;i===0?ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);}
-      ctx.closePath();ctx.fill();
-    } else {ctx.fillRect(-this.size/2,-this.size/4,this.size,this.size/2);}
-    ctx.restore();
+      ctx2d.beginPath();
+      for(let i=0;i<10;i++){const r=i%2===0?this.size:this.size*.4;const a=(i*Math.PI)/5-Math.PI/2;i===0?ctx2d.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx2d.lineTo(Math.cos(a)*r,Math.sin(a)*r);}
+      ctx2d.closePath();ctx2d.fill();
+    } else {ctx2d.fillRect(-this.size/2,-this.size/4,this.size,this.size/2);}
+    ctx2d.restore();
   }
 }
 let particles=[],rafId=null;
 function burst(x,y,colors){
-  for(let i=0;i<130;i++)particles.push(new Particle(x+(Math.random()-.5)*160,y,colors));
-  if(!rafId)animLoop();
+  for(let i=0;i<130;i++) particles.push(new Particle(x+(Math.random()-.5)*160,y,colors));
+  if(!rafId) animLoop();
+}
+function burstWinner() {
+  for(let i=0;i<8;i++) {
+    setTimeout(()=>{
+      const x=Math.random()*canvas.width, y=Math.random()*canvas.height*0.6;
+      burst(x,y,['#ffd700','#fff','#3b82f6','#ef4444','#22c55e','#f59e0b']);
+    }, i*400);
+  }
 }
 function animLoop(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx2d.clearRect(0,0,canvas.width,canvas.height);
   particles=particles.filter(p=>p.life>0);
   particles.forEach(p=>{p.update();p.draw();});
-  if(particles.length>0)rafId=requestAnimationFrame(animLoop);
-  else{rafId=null;ctx.clearRect(0,0,canvas.width,canvas.height);}
+  if(particles.length>0) rafId=requestAnimationFrame(animLoop);
+  else{rafId=null;ctx2d.clearRect(0,0,canvas.width,canvas.height);}
 }
 function scoreEffect(team){
   const el=document.getElementById('score'+team);
   const rect=el.getBoundingClientRect();
   el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');
   setTimeout(()=>el.classList.remove('pop'),600);
+  const panel=document.getElementById('team'+team+'-panel');
+  panel.classList.remove('scored');void panel.offsetWidth;panel.classList.add('scored');
+  setTimeout(()=>panel.classList.remove('scored'),900);
   const c=team===1?['#60a5fa','#93c5fd','#fff','#ffd700','#3b82f6']:['#f87171','#fca5a5','#fff','#ffd700','#ef4444'];
   burst(rect.left+rect.width/2, rect.top+rect.height/2, c);
 }
-
 
 // ── LOADING ANIMATION ─────────────────────────────
 const familyVerses = [
@@ -395,13 +471,13 @@ const familyVerses = [
   '"Honra a teu pai e a tua mãe" — Êxodo 20:12',
   '"O amor nunca falha" — 1 Coríntios 13:8',
   '"Se alguém não cuida dos seus, negou a fé" — 1 Timóteo 5:8',
-  '"Melhor é o fim de alguma coisa do que o seu princípio" — Eclesiastes 7:8',
   '"Dois são melhor do que um" — Eclesiastes 4:9',
   '"O amor cobre multidão de pecados" — 1 Pedro 4:8',
-  '"A família que ora unida, permanece unida" — provérbio cristão',
   '"Suportem uns aos outros com amor" — Efésios 4:2',
   '"Deus coloca os solitários em famílias" — Salmos 68:6',
   '"A casa dos justos tem grande tesouro" — Provérbios 15:6',
+  '"Melhor é o fim de alguma coisa do que o seu princípio" — Eclesiastes 7:8',
+  '"A família que ora unida, permanece unida" — provérbio cristão',
 ];
 const loadFiles = [
   'rodadas.json .............. carregando',
@@ -414,148 +490,143 @@ const loadFiles = [
 let loadTimer = null;
 
 function startLoadingAnimation() {
-  const bar      = document.getElementById('load-bar');
-  const verseEl  = document.getElementById('load-verse');
-  const filesEl  = document.getElementById('load-files');
-  if (!bar || !verseEl) return;
-  bar.style.width = '0%';
-  verseEl.textContent = '';
-  filesEl.innerHTML   = loadFiles.map(f=>'<div class="load-file">'+f+'</div>').join('');
-  let step = 0;
-  const total = familyVerses.length;
-  verseEl.classList.remove('fade');
-  verseEl.textContent = familyVerses[0];
-  const fileEls = filesEl.querySelectorAll('.load-file');
-  if (loadTimer) clearInterval(loadTimer);
-  loadTimer = setInterval(() => {
+  const bar=document.getElementById('load-bar');
+  const verseEl=document.getElementById('load-verse');
+  const filesEl=document.getElementById('load-files');
+  if(!bar||!verseEl)return;
+  bar.style.width='0%'; verseEl.textContent='';
+  filesEl.innerHTML=loadFiles.map(f=>'<div class="load-file">'+f+'</div>').join('');
+  let step=0; const total=familyVerses.length;
+  verseEl.classList.remove('fade'); verseEl.textContent=familyVerses[0];
+  const fileEls=filesEl.querySelectorAll('.load-file');
+  if(loadTimer)clearInterval(loadTimer);
+  loadTimer=setInterval(()=>{
     step++;
-    bar.style.width = Math.min(100,(step/total)*100)+'%';
-    if (step < fileEls.length) fileEls[step-1].classList.add('show');
-    if (step < total) {
+    bar.style.width=Math.min(100,(step/total)*100)+'%';
+    if(step<fileEls.length)fileEls[step-1].classList.add('show');
+    if(step<total){
       verseEl.classList.add('fade');
       setTimeout(()=>{verseEl.textContent=familyVerses[step];verseEl.classList.remove('fade');},500);
     } else {
       fileEls.forEach(f=>f.classList.add('show'));
       clearInterval(loadTimer);loadTimer=null;
-      // Advance to placar after 1.5s more
       setTimeout(()=>db.doc('game/state').update({screen:'placar'}),1500);
     }
-  }, 1800);
+  },1800);
 }
 
-// ── VERSE SCREEN ───────────────────────────────
+// ── VERSE SCREEN ──────────────────────────────────
 let lastVsPhase = null;
 function renderVerseScreen(s) {
-  const vs = s.versiculoState;
-  if (!vs || !vs.active) return;
-  const rounds = s.rounds || [];
-  const round = rounds[s.currentRoundIndex ?? 0];
-  document.getElementById('vs-round-title').textContent = round?.name || '—';
-  const t = vs.activeTeam || 1;
-  const tName = t===1 ? (s.team1Name||'Equipe 1') : (s.team2Name||'Equipe 2');
-  const badge = document.getElementById('vs-team-badge');
-  badge.textContent = tName + ' respondendo';
-  badge.className = 'vs-team-badge t' + t;
-  document.getElementById('vs-scrambled').innerHTML = (vs.scrambled||[]).map(w =>
-    '<div class="vs-word-card"><span class="vs-word-text">'+w.word+'</span></div>'
-  ).join('') || '';
-  document.getElementById('vs-phrase').innerHTML = (vs.selected||[]).map(w =>
+  const vs=s.versiculoState;
+  if(!vs||!vs.active)return;
+  const rounds=s.rounds||[], round=rounds[s.currentRoundIndex??0];
+  document.getElementById('vs-round-title').textContent=round?.name||'—';
+  const t=vs.activeTeam||1, tName=t===1?(s.team1Name||'Equipe 1'):(s.team2Name||'Equipe 2');
+  const badge=document.getElementById('vs-team-badge');
+  badge.textContent=tName+' respondendo'; badge.className='vs-team-badge t'+t;
+  const scrambled=vs.scrambled||[];
+  document.getElementById('vs-scrambled').innerHTML=scrambled.map((w,i)=>
+    '<div class="vs-word-card" style="animation-delay:'+(i*0.06)+'s"><span class="vs-word-text">'+w.word+'</span></div>'
+  ).join('')||'';
+  document.getElementById('vs-phrase').innerHTML=(vs.selected||[]).map(w=>
     '<div class="vs-phrase-word">'+w.word+'</div>'
-  ).join('') || '<span class="vs-phrase-empty">aguardando seleção...</span>';
-
-  const phaseKey = (vs.phase||'') + '-' + (vs.verseIndex||0) + '-' + (vs.vsTs||0);
-  if (phaseKey !== lastVsPhase) {
-    lastVsPhase = phaseKey;
-    const resultEl = document.getElementById('vs-result');
-    const bannerEl = document.getElementById('vs-banner');
-    if (vs.phase === 'correct') {
-      resultEl.innerHTML = '<div class="vs-stamp correct">✓ CORRETO!</div>';
-      resultEl.classList.add('show');
+  ).join('')||'<span class="vs-phrase-empty">aguardando seleção...</span>';
+  const phaseKey=(vs.phase||'')+'-'+(vs.verseIndex||0)+'-'+(vs.vsTs||0);
+  if(phaseKey!==lastVsPhase){
+    lastVsPhase=phaseKey;
+    const resultEl=document.getElementById('vs-result'), bannerEl=document.getElementById('vs-banner');
+    if(vs.phase==='correct'){
+      resultEl.innerHTML='<div class="vs-stamp correct">✓ CORRETO!</div>';
+      resultEl.classList.remove('hide'); resultEl.classList.add('show');
       bannerEl.classList.remove('show');
-      scoreEffect(t);
-      playSound('snd-acerto');
-    } else if (vs.phase === 'wrong') {
-      resultEl.innerHTML = '<div class="vs-stamp wrong">✗ ERRADO!</div>';
-      resultEl.classList.add('show');
+      scoreEffect(t); playSound('snd-acerto');
+    } else if(vs.phase==='wrong'){
+      resultEl.innerHTML='<div class="vs-stamp wrong">✗ ERRADO!</div>';
+      resultEl.classList.remove('hide'); resultEl.classList.add('show');
       playSound('snd-erro');
-      const verse = round?.verses?.[vs.verseIndex];
-      if (verse) { document.getElementById('vs-banner-text').textContent = verse.text; bannerEl.classList.add('show'); }
+      const verse=round?.verses?.[vs.verseIndex];
+      if(verse){document.getElementById('vs-banner-text').textContent=verse.text;bannerEl.classList.add('show');}
     } else {
-      resultEl.classList.remove('show'); resultEl.innerHTML = '';
+      resultEl.classList.add('hide');
+      setTimeout(()=>{resultEl.classList.remove('show','hide');resultEl.innerHTML='';},400);
       bannerEl.classList.remove('show');
     }
   }
 }
 
-// ── MAIN LISTENER ──────────────────────────────
-let lastScoreTs=0, lastScreen=null, transTimer=null;
-
-// Auto-show inicio if already set when page loads
-setTimeout(()=>{
-  if(lastScreen==='inicio'){document.getElementById('ov-inicio').classList.add('active');}
-},100);
-
-db.doc('game/state').onSnapshot(snap => {
-  if (!snap.exists) return;
-  const s = snap.data();
-
-  document.getElementById('team1-name').textContent = s.team1Name||'Equipe 1';
-  document.getElementById('team2-name').textContent = s.team2Name||'Equipe 2';
-  document.getElementById('score1').textContent = s.team1Score??0;
-  document.getElementById('score2').textContent = s.team2Score??0;
-
+// ── WINNER SCREEN ─────────────────────────────────
+function showWinnerScreen(s) {
   const s1=s.team1Score??0, s2=s.team2Score??0;
-  document.getElementById('crown1').classList.toggle('show', s1>s2);
-  document.getElementById('crown2').classList.toggle('show', s2>s1);
+  const content=document.getElementById('winner-content');
+  if(s1===s2){
+    content.innerHTML='<div class="winner-eyebrow">Resultado Final</div><div class="winner-tie">EMPATE!</div><div class="winner-score">'+s1+' × '+s2+'</div>';
+  } else {
+    const winner=s1>s2?1:2;
+    const name=winner===1?(s.team1Name||'Equipe 1'):(s.team2Name||'Equipe 2');
+    const pts=winner===1?s1:s2;
+    content.innerHTML='<div class="winner-eyebrow">🏆 Vencedor</div><div class="winner-crown">👑</div><div class="winner-name t'+winner+'">'+name+'</div><div class="winner-score">'+pts+' pontos</div>';
+    burstWinner(); playWinnerSound();
+  }
+}
 
-  const ev = s.lastScoreEvent;
-  if (ev && ev.ts && ev.ts !== lastScoreTs) { lastScoreTs=ev.ts; scoreEffect(ev.team); }
+// ── MAIN LISTENER ─────────────────────────────────
+let lastScoreTs=0, lastScreen=null, transTimer=null;
+const allOverlays=['ov-inicio','ov-loading','ov-transition','ov-lightning','ov-challenge','ov-paused','ov-winner','ov-versiculo'];
 
-  const rounds = s.rounds||[];
-  const idx = s.currentRoundIndex??0;
-  document.getElementById('round-name').textContent = rounds[idx]?.name||'—';
-
-  const screen = s.screen||'placar';
-
-  if (screen === 'versiculo') renderVerseScreen(s);
-
-  if (screen !== lastScreen) {
-    lastScreen = screen;
-    ['ov-inicio','ov-loading','ov-transition','ov-lightning','ov-challenge','ov-versiculo'].forEach(id =>
-      document.getElementById(id).classList.remove('active')
-    );
-    if (screen === 'inicio') {
+db.doc('game/state').onSnapshot(snap=>{
+  if(!snap.exists)return;
+  const s=snap.data();
+  document.getElementById('team1-name').textContent=s.team1Name||'Equipe 1';
+  document.getElementById('team2-name').textContent=s.team2Name||'Equipe 2';
+  document.getElementById('score1').textContent=s.team1Score??0;
+  document.getElementById('score2').textContent=s.team2Score??0;
+  const s1=s.team1Score??0, s2=s.team2Score??0;
+  document.getElementById('crown1').classList.toggle('show',s1>s2);
+  document.getElementById('crown2').classList.toggle('show',s2>s1);
+  const ev=s.lastScoreEvent;
+  if(ev&&ev.ts&&ev.ts!==lastScoreTs){lastScoreTs=ev.ts;scoreEffect(ev.team);}
+  const rounds=s.rounds||[], idx=s.currentRoundIndex??0;
+  document.getElementById('round-name').textContent=rounds[idx]?.name||'—';
+  const screen=s.screen||'placar';
+  if(screen==='versiculo')renderVerseScreen(s);
+  if(screen!==lastScreen){
+    lastScreen=screen;
+    allOverlays.forEach(id=>document.getElementById(id)?.classList.remove('active'));
+    if(screen==='inicio'){
       document.getElementById('ov-inicio').classList.add('active');
-    } else if (screen === 'loading') {
+    } else if(screen==='loading'){
       document.getElementById('ov-loading').classList.add('active');
       startLoadingAnimation();
-    } else if (screen === 'transicao') {
-      const el = document.getElementById('transition-name');
-      el.textContent = rounds[idx]?.name||'—';
-      el.classList.remove('slide-in'); void el.offsetWidth; el.classList.add('slide-in');
+    } else if(screen==='transicao'){
+      const el=document.getElementById('transition-name');
+      el.textContent=rounds[idx]?.name||'—';
+      el.classList.remove('slide-in');void el.offsetWidth;el.classList.add('slide-in');
       document.getElementById('ov-transition').classList.add('active');
-      if (transTimer) clearTimeout(transTimer);
-      transTimer = setTimeout(() => {
-        const next = s.pendingScreen || 'placar';
-        db.doc('game/state').update({screen: next, pendingScreen: null});
-      }, 3800);
-    } else if (screen === 'relampago1') {
+      playTransitionSound();
+      if(transTimer)clearTimeout(transTimer);
+      transTimer=setTimeout(()=>{
+        const next=s.pendingScreen||'placar';
+        db.doc('game/state').update({screen:next,pendingScreen:null});
+      },3800);
+    } else if(screen==='relampago1'){
       document.getElementById('ov-lightning').classList.add('active');
       playSound('buzina');
-    } else if (screen === 'relampago2') {
-      const ch = s.activeChallenge;
-      if (ch) {
-        const el = document.getElementById('ch-text');
-        el.textContent = ch.text;
-        el.classList.remove('appear'); void el.offsetWidth; el.classList.add('appear');
-      }
+    } else if(screen==='relampago2'){
+      const ch=s.activeChallenge;
+      if(ch){const el=document.getElementById('ch-text');el.textContent=ch.text;el.classList.remove('appear');void el.offsetWidth;el.classList.add('appear');}
       document.getElementById('ov-challenge').classList.add('active');
-    } else if (screen === 'versiculo') {
+    } else if(screen==='versiculo'){
       document.getElementById('ov-versiculo').classList.add('active');
-      lastVsPhase = null;
+      lastVsPhase=null;
+    } else if(screen==='paused'){
+      document.getElementById('ov-paused').classList.add('active');
+    } else if(screen==='winner'){
+      document.getElementById('ov-winner').classList.add('active');
+      showWinnerScreen(s);
     }
   }
-}, err => console.error('Firebase error:', err));
+},err=>console.error('Firebase:',err));
 </script>
 </body>
 </html>
