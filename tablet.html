@@ -179,8 +179,8 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
 #btn-lightning.cooldown{opacity:.5;cursor:not-allowed;}
 #btn-pause{background:#fff;border-color:#e5e7eb;color:#374151;}
 #btn-pause.paused{background:#f59e0b;border-color:#f59e0b;color:#fff;}
-#btn-lightning-undo{display:none;background:#fff;border-color:#fecaca;color:#dc2626;font-size:11px;}
-#btn-lightning-undo.show{display:flex;}
+#btn-lightning-undo{display:none;padding:8px 12px;border-radius:8px;border:1.5px solid #fecaca;background:#fff;color:#dc2626;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex:none;}
+#btn-lightning-undo.show{display:flex;align-items:center;}
 
 /* CHALLENGE AWARD */
 #challenge-award{display:none;background:#fffbeb;border:2px solid #f59e0b;border-radius:13px;padding:14px;text-align:center;margin-bottom:12px;}
@@ -848,6 +848,8 @@ async function awardChallenge(team){
 }
 async function undoLightning(){
   if(!lightningLastAction){toast('Nada para desfazer');return;}
+  const ok=await showModal('↩','Desfazer Relâmpago','Remover os 50 pontos do Desafio Relâmpago?','Desfazer','danger');
+  if(!ok)return;
   const a=lightningLastAction; lightningLastAction=null;
   const upd={lastAction:null};
   upd[a.team===1?'team1Score':'team2Score']=a.prevScore;
