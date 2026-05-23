@@ -116,14 +116,14 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 
 /* VERSE OVERLAY */
 #ov-versiculo{background:var(--bg);flex-direction:column;justify-content:flex-start;align-items:stretch;overflow:hidden;}
-.vs-wrap{flex:1;display:flex;flex-direction:column;padding:24px 80px 16px;min-height:0;position:relative;}
+.vs-wrap{flex:1;display:flex;flex-direction:column;padding:clamp(12px,2vh,24px) clamp(20px,5vw,80px) 16px;min-height:0;position:relative;overflow:hidden;}
 .vs-header{text-align:center;margin-bottom:18px;flex-shrink:0;}
 .vs-round-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6.5vh,70px);letter-spacing:10px;color:#fff;line-height:1;margin-bottom:10px;}
 .vs-team-badge{display:inline-block;padding:7px 26px;border-radius:30px;font-size:clamp(13px,2vh,20px);font-weight:700;letter-spacing:4px;text-transform:uppercase;}
 .vs-team-badge.t1{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.4);color:#60a5fa;}
 .vs-team-badge.t2{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#f87171;}
 .vs-section-label{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.25);text-align:center;margin-bottom:12px;flex-shrink:0;}
-.vs-scrambled{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;flex-shrink:0;margin-bottom:8px;}
+.vs-scrambled{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;flex-shrink:0;margin-bottom:8px;overflow-y:auto;max-height:35vh;}
 .vs-word-card{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:8px 16px;animation:wordAppear .3s ease;}
 @keyframes wordAppear{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
 .vs-word-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,3.2vh,38px);letter-spacing:2px;color:#fff;}
@@ -254,6 +254,31 @@ const db = firebase.firestore();
 
 // ── AUDIO ──────────────────────────────────────
 let audioUnlocked = false;
+function enterFullscreen() {
+  const el = document.documentElement;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    // Re-enter fullscreen if exited unintentionally (not from start screen)
+    const ss = document.getElementById('start-screen');
+    if (ss.style.display === 'none') {
+      setTimeout(() => enterFullscreen(), 800);
+    }
+  }
+});
+document.addEventListener('webkitfullscreenchange', () => {
+  if (!document.webkitFullscreenElement) {
+    const ss = document.getElementById('start-screen');
+    if (ss.style.display === 'none') {
+      setTimeout(() => enterFullscreen(), 800);
+    }
+  }
+});
+
 function startGame() {
   const sc = document.getElementById('start-screen');
   sc.classList.add('hide');
@@ -263,6 +288,7 @@ function startGame() {
     a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {});
   });
   audioUnlocked = true;
+  enterFullscreen();
 }
 function playSound(id) {
   if (!audioUnlocked) return;
@@ -402,7 +428,10 @@ db.doc('game/state').onSnapshot(snap => {
       el.classList.remove('slide-in'); void el.offsetWidth; el.classList.add('slide-in');
       document.getElementById('ov-transition').classList.add('active');
       if (transTimer) clearTimeout(transTimer);
-      transTimer = setTimeout(() => db.doc('game/state').update({screen:'placar'}), 3800);
+      transTimer = setTimeout(() => {
+        const next = s.pendingScreen || 'placar';
+        db.doc('game/state').update({screen: next, pendingScreen: null});
+      }, 3800);
     } else if (screen === 'relampago1') {
       document.getElementById('ov-lightning').classList.add('active');
       playSound('buzina');
