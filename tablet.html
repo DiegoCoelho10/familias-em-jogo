@@ -12,6 +12,16 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
 
+
+/* TABLET LOADING OVERLAY */
+#tablet-loading{display:none;position:fixed;inset:0;z-index:9998;background:#07090f;flex-direction:column;align-items:center;justify-content:center;}
+#tablet-loading.show{display:flex;}
+.tl-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,72px);letter-spacing:10px;color:#fff;margin-bottom:8px;text-align:center;}
+.tl-sub{font-size:13px;font-weight:700;letter-spacing:12px;text-transform:uppercase;color:#f59e0b;margin-bottom:48px;}
+.tl-bar-wrap{width:220px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-bottom:16px;}
+.tl-bar{height:100%;background:linear-gradient(to right,#3b82f6,#f59e0b,#ef4444);border-radius:2px;width:0%;transition:width .6s ease;}
+.tl-text{font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.35);}
+
 /* NAV */
 #nav{background:#0f1523;display:flex;align-items:center;padding:0 14px;height:54px;flex-shrink:0;gap:4px;}
 #nav-brand{display:flex;align-items:center;gap:8px;margin-right:auto;}
@@ -446,6 +456,12 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
   </div>
 </div>
 
+<div id="tablet-loading">
+  <div class="tl-title">Famílias em Jogo</div>
+  <div class="tl-sub">O Grande Desafio</div>
+  <div class="tl-bar-wrap"><div class="tl-bar" id="tl-bar"></div></div>
+  <div class="tl-text" id="tl-text">Carregando...</div>
+</div>
 <div id="toast"></div>
 <div id="fs-prompt" onclick="enterFullscreen()">⛶ Retornar à tela cheia</div>
 <div id="error-banner"></div>
@@ -465,6 +481,31 @@ const stateRef = db.doc('game/state');
 let gs = null;
 let newRoundPts=[], newRoundType='normal', newVersesList=[], expandedRound=null;
 let lightningCooldown=false, lightningLastAction=null;
+
+
+// ── TABLET LOADING ANIMATION ──────────────────────
+let tabletLoadTimer = null;
+function startTabletLoading() {
+  if (tabletLoadTimer) return; // already running
+  const bar = document.getElementById('tl-bar');
+  const txt = document.getElementById('tl-text');
+  const msgs = ['Carregando rodadas...','Preparando equipes...','Configurando desafios...','Quase lá...','Pronto!'];
+  let step = 0;
+  const total = msgs.length;
+  bar.style.width = '0%';
+  txt.textContent = msgs[0];
+  tabletLoadTimer = setInterval(() => {
+    step++;
+    bar.style.width = Math.min(100, (step/total)*100) + '%';
+    txt.textContent = msgs[Math.min(step, msgs.length-1)];
+    if (step >= total) { clearInterval(tabletLoadTimer); tabletLoadTimer = null; }
+  }, 1700);
+}
+function stopTabletLoading() {
+  if (tabletLoadTimer) { clearInterval(tabletLoadTimer); tabletLoadTimer = null; }
+  const bar = document.getElementById('tl-bar');
+  if (bar) bar.style.width = '0%';
+}
 
 // ── MODAL ─────────────────────────────────────────
 function showModal(icon, title, msg, confirmText='Confirmar', confirmClass='', cancelText='Cancelar') {
@@ -570,6 +611,15 @@ function render(){
     else{pauseBtn.classList.remove('paused');pauseBtn.textContent='⏸ Pausar';}
     renderRounds(rounds);
     renderChallenges(gs.challenges||[]);
+    // Loading overlay
+    const loadOverlay = document.getElementById('tablet-loading');
+    if (gs.screen === 'loading') {
+      loadOverlay.classList.add('show');
+      startTabletLoading();
+    } else {
+      loadOverlay.classList.remove('show');
+      stopTabletLoading();
+    }
   }catch(e){console.error('render:',e);}
 }
 
