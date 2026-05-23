@@ -94,6 +94,8 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
 .qc-btn.both:hover{background:#8b5cf6;color:#fff;}
 .qc-skip{padding:12px;border-radius:11px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;width:100%;transition:all .15s;}
 .qc-skip:hover{background:#f3f4f6;}
+.qc-next-q-btn{padding:14px;border-radius:11px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px;transition:all .15s;letter-spacing:.5px;}
+.qc-next-q-btn:hover{background:#1e2a3e;}
 .qc-ended{text-align:center;padding:18px;}
 .qc-ended-icon{font-size:40px;margin-bottom:8px;}
 .qc-ended-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:#0f1523;margin-bottom:4px;}
@@ -276,7 +278,8 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
         <div class="qc-counter" id="qc-counter">Pergunta 1 de 1</div>
         <div class="qc-question" id="qc-question-text">—</div>
         <div class="qc-grid" id="qc-score-grid"></div>
-        <button class="qc-skip" onclick="nextQuestion()">Pular sem pontuar →</button>
+        <button class="qc-next-q-btn" onclick="nextQuestion()">Próxima Pergunta →</button>
+        <button class="qc-skip" onclick="nextQuestion()">Pular sem pontuar</button>
       </div>
       <div class="card qc-ended" id="qc-ended" style="display:none">
         <div class="qc-ended-icon">🏁</div>
@@ -779,7 +782,7 @@ async function iniciarJogo() {
   // Fallback: advance to placar after 8s if telão doesn't do it
   setTimeout(async()=>{
     try{const s=(await stateRef.get()).data();if(s.screen==='loading')await stateRef.update({screen:'placar'});}catch(e){}
-  },8500);
+  },30000);
 }
 
 async function voltarInicio() {
