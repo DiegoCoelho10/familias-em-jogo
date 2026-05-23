@@ -396,6 +396,14 @@ function playWinnerSound() {
   setTimeout(() => [1047,1175,1319].forEach((f,i) => playTone(f, i*0.12, 0.22, 0.3)), 700);
 }
 
+function playScoreSound() {
+  if (!audioUnlocked) return;
+  // Punchy ascending "points scored" jingle
+  playTone(659, 0,    0.08, 0.22); // E5
+  playTone(784, 0.09, 0.08, 0.22); // G5
+  playTone(1047,0.18, 0.18, 0.25); // C6
+}
+
 function playSound(id) {
   if (!audioUnlocked) return;
   const a = document.getElementById(id);
@@ -459,6 +467,7 @@ function scoreEffect(team){
   setTimeout(()=>panel.classList.remove('scored'),900);
   const c=team===1?['#60a5fa','#93c5fd','#fff','#ffd700','#3b82f6']:['#f87171','#fca5a5','#fff','#ffd700','#ef4444'];
   burst(rect.left+rect.width/2, rect.top+rect.height/2, c);
+  playScoreSound();
 }
 
 // ── LOADING ANIMATION ─────────────────────────────
