@@ -13,217 +13,255 @@
 body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height:100vh;overflow:hidden;display:flex;flex-direction:column;}
 
 /* NAV */
-#nav{background:#0f1523;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 16px;height:56px;flex-shrink:0;gap:4px;}
+#nav{background:#0f1523;display:flex;align-items:center;padding:0 14px;height:54px;flex-shrink:0;gap:4px;}
 #nav-brand{display:flex;align-items:center;gap:8px;margin-right:auto;}
 #status-dot{width:8px;height:8px;border-radius:50%;background:#374151;transition:background .4s;flex-shrink:0;}
 #status-dot.ok{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.6);}
-#nav-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:#fff;}
-.nav-tab{padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;background:transparent;color:rgba(255,255,255,.45);transition:all .2s;white-space:nowrap;}
-.nav-tab:hover{color:rgba(255,255,255,.8);}
-.nav-tab.active{background:rgba(255,255,255,.1);color:#fff;}
-#fs-btn{padding:7px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;font-size:15px;transition:all .2s;flex-shrink:0;}
+#nav-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff;}
+#leader-badge{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;display:none;}
+#leader-badge.show{display:inline-block;}
+#leader-badge.t1{background:rgba(59,130,246,.25);color:#60a5fa;border:1px solid rgba(59,130,246,.4);}
+#leader-badge.t2{background:rgba(239,68,68,.25);color:#f87171;border:1px solid rgba(239,68,68,.4);}
+#leader-badge.tie{background:rgba(245,158,11,.2);color:#f59e0b;border:1px solid rgba(245,158,11,.4);}
+.nav-tab{padding:6px 14px;border-radius:7px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;background:transparent;color:rgba(255,255,255,.4);transition:all .2s;white-space:nowrap;}
+.nav-tab:hover{color:rgba(255,255,255,.8);}.nav-tab.active{background:rgba(255,255,255,.1);color:#fff;}
+#fs-btn{padding:6px 10px;border-radius:7px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;transition:all .2s;flex-shrink:0;}
 #fs-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
 
 /* CONTENT */
-#content{flex:1;overflow-y:auto;padding:16px;}
+#content{flex:1;overflow-y:auto;padding:14px;}
 .tab{display:none;}.tab.active{display:block;}
 
+/* MODAL */
+#modal-overlay{display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);align-items:center;justify-content:center;}
+#modal-overlay.show{display:flex;}
+#modal-box{background:#fff;border-radius:22px;padding:32px 36px;max-width:380px;width:88%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.25);}
+#modal-icon{font-size:44px;margin-bottom:12px;}
+#modal-title{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#0f1523;margin-bottom:8px;}
+#modal-msg{font-size:14px;color:#6b7280;margin-bottom:24px;line-height:1.5;}
+#modal-btns{display:flex;gap:10px;}
+#modal-cancel{flex:1;padding:13px;border-radius:11px;border:1.5px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:600;color:#6b7280;cursor:pointer;}
+#modal-cancel:hover{background:#f3f4f6;}
+#modal-confirm{flex:1;padding:13px;border-radius:11px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+#modal-confirm:hover{background:#1e2a3e;}
+#modal-confirm.danger{background:#dc2626;}
+#modal-confirm.danger:hover{background:#b91c1c;}
+#modal-confirm.success{background:#16a34a;}
+#modal-confirm.success:hover{background:#15803d;}
+
 /* CARDS */
-.card{background:#fff;border-radius:14px;border:1px solid #e5e7eb;padding:18px 20px;margin-bottom:14px;}
-.card-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:16px;}
+.card{background:#fff;border-radius:14px;border:1px solid #e5e7eb;padding:16px 18px;margin-bottom:12px;}
+.card-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:14px;}
+
+/* GAME CTRL */
+.game-ctrl-row{display:flex;gap:8px;margin-bottom:12px;}
+.start-btn{flex:2;padding:13px;border-radius:11px;border:none;background:linear-gradient(135deg,#1e3a5f,#0f1523);color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.start-btn:hover{background:linear-gradient(135deg,#2d5a8f,#1e2a3e);}
+.end-btn{flex:1;padding:13px;border-radius:11px;border:none;background:linear-gradient(135deg,#78350f,#451a03);color:#fbbf24;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+.end-btn:hover{background:linear-gradient(135deg,#92400e,#651a03);}
+.reset-btn{padding:13px 16px;border-radius:11px;border:1.5px solid #fecaca;background:#fff;color:#dc2626;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.reset-btn:hover{background:#fef2f2;}
 
 /* ROUND HEADER */
-#round-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-#round-info{flex:1;}
+#round-header{display:flex;align-items:center;gap:10px;}
 #round-info .r-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;}
-#round-info .r-name{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:#0f1523;margin-top:2px;}
-.nav-round-btn{width:46px;height:46px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;color:#374151;font-weight:700;}
-.nav-round-btn:hover{background:#f3f4f6;}
-.nav-round-btn:active{transform:scale(.93);}
+#round-info .r-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#0f1523;margin-top:2px;}
+#round-info{flex:1;}
+.nav-round-btn{width:44px;height:44px;border-radius:9px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-weight:700;}
+.nav-round-btn:hover{background:#f3f4f6;}.nav-round-btn:active{transform:scale(.92);}
 
 /* TEAMS GRID */
-#teams-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-.team-score-card{border-radius:14px;border:2px solid #e5e7eb;padding:16px;text-align:center;transition:border-color .2s;}
-.team-score-card.t1{border-color:#bfdbfe;}
-.team-score-card.t2{border-color:#fecaca;}
-.tc-name{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+#teams-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.team-score-card{border-radius:13px;border:2px solid #e5e7eb;padding:14px;text-align:center;}
+.team-score-card.t1{border-color:#bfdbfe;}.team-score-card.t2{border-color:#fecaca;}
+.tc-name{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
 .t1 .tc-name{color:#2563eb;}.t2 .tc-name{color:#dc2626;}
-.tc-score{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.9;margin-bottom:12px;}
+.tc-score{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:.9;margin-bottom:10px;}
 .t1 .tc-score{color:#3b82f6;}.t2 .tc-score{color:#ef4444;}
-.pts-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
-.pt-btn{padding:9px 14px;border-radius:9px;border:2px solid;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;transition:all .15s;min-width:58px;}
+.pts-grid{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;}
+.pt-btn{padding:8px 12px;border-radius:8px;border:2px solid;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;transition:all .15s;min-width:52px;}
 .pt-btn:active{transform:scale(.93);}
 .t1-pt{border-color:#3b82f6;color:#3b82f6;}.t1-pt:hover{background:#3b82f6;color:#fff;}
 .t2-pt{border-color:#ef4444;color:#ef4444;}.t2-pt:hover{background:#ef4444;color:#fff;}
 .no-pts{font-size:12px;color:#d1d5db;}
 
-/* ACTION ROW */
-#action-row{display:flex;gap:10px;margin-bottom:12px;}
-.act-btn{flex:1;padding:13px 10px;border-radius:11px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:#6b7280;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s;}
-.act-btn:hover{background:#f9fafb;}
-.act-btn:active{transform:scale(.97);}
-#btn-lightning{background:#0f1523;border-color:#0f1523;color:#ffd700;font-size:14px;}
-#btn-lightning:hover{background:#1e2a3e;}
-
-/* CHALLENGE AWARD */
-#challenge-award{display:none;background:#fffbeb;border:2px solid #f59e0b;border-radius:14px;padding:16px;text-align:center;margin-bottom:12px;}
-#challenge-award.show{display:block;}
-.award-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#92400e;margin-bottom:4px;}
-.award-question{font-size:13px;color:#78350f;margin-bottom:12px;}
-.award-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.award-btn{padding:14px;border-radius:11px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;transition:all .15s;}
-.award-btn:active{transform:scale(.96);}
-#aw-t1{background:#2563eb;color:#fff;}#aw-t1:hover{background:#1d4ed8;}
-#aw-t2{background:#dc2626;color:#fff;}#aw-t2:hover{background:#b91c1c;}
-
-/* QUESTION BY QUESTION */
+/* QUESTION CONTROL */
 #question-control{display:none;margin-bottom:12px;}
 #question-control.show{display:block;}
-.qc-counter{font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:1px;margin-bottom:8px;}
-.qc-question{font-size:15px;font-weight:600;color:#111827;line-height:1.5;padding:14px;background:#f9fafb;border-radius:10px;border-left:3px solid #0f1523;margin-bottom:14px;}
+.qc-counter{font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:1px;margin-bottom:6px;}
+.qc-question{font-size:15px;font-weight:600;color:#111827;line-height:1.5;padding:13px;background:#f9fafb;border-radius:10px;border-left:3px solid #0f1523;margin-bottom:14px;}
 .qc-teams-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
-.qc-both-row{display:flex;gap:8px;justify-content:center;margin-bottom:10px;}
 .qc-col{display:flex;flex-direction:column;gap:6px;}
-.qc-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:2px;}
+.qc-col-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:2px;}
 .qc-col.t1 .qc-col-label{color:#2563eb;}.qc-col.t2 .qc-col-label{color:#dc2626;}
-.qc-btn{padding:12px 8px;border-radius:10px;border:2px solid;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;transition:all .15s;width:100%;}
+.qc-both-row{display:flex;justify-content:center;margin-bottom:10px;}
+.qc-btn{padding:11px 6px;border-radius:10px;border:2px solid;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;transition:all .15s;width:100%;}
 .qc-btn:active{transform:scale(.95);}
 .qc-btn.t1{border-color:#3b82f6;color:#3b82f6;}.qc-btn.t1:hover{background:#3b82f6;color:#fff;}
 .qc-btn.t2{border-color:#ef4444;color:#ef4444;}.qc-btn.t2:hover{background:#ef4444;color:#fff;}
-.qc-btn.both{padding:11px 28px;border-radius:10px;border:2px solid #8b5cf6;color:#8b5cf6;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;transition:all .15s;}
-.qc-btn.both:hover{background:#8b5cf6;color:#fff;}
-.qc-skip{padding:12px;border-radius:11px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;width:100%;transition:all .15s;}
-.qc-skip:hover{background:#f3f4f6;}
-.qc-next-q-btn{padding:14px;border-radius:11px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px;transition:all .15s;letter-spacing:.5px;}
-.qc-next-q-btn:hover{background:#1e2a3e;}
+.qc-btn.both{padding:11px 32px;border-color:#8b5cf6;color:#8b5cf6;}.qc-btn.both:hover{background:#8b5cf6;color:#fff;}
+.qc-row-btns{display:flex;gap:8px;margin-bottom:6px;}
+.qc-next-btn{flex:2;padding:13px;border-radius:10px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.qc-next-btn:hover{background:#1e2a3e;}
+.qc-skip-btn{flex:1;padding:13px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:#6b7280;cursor:pointer;}
+.qc-skip-btn:hover{background:#f3f4f6;}
+/* History panel inside question */
+.q-history{margin-top:8px;}
+.q-hist-item{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:7px;background:#f9fafb;margin-bottom:4px;font-size:11px;color:#6b7280;}
+.q-hist-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.q-hist-dot.t1{background:#3b82f6;}.q-hist-dot.t2{background:#ef4444;}.q-hist-dot.both{background:#8b5cf6;}.q-hist-dot.skip{background:#d1d5db;}
+/* Round ended */
 .qc-ended{text-align:center;padding:18px;}
 .qc-ended-icon{font-size:40px;margin-bottom:8px;}
-.qc-ended-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:#0f1523;margin-bottom:4px;}
+.qc-ended-title{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:#0f1523;margin-bottom:4px;}
 .qc-ended-sub{font-size:12px;color:#6b7280;margin-bottom:16px;}
-.qc-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.qc-scores{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
 .qc-sbox{padding:12px;border-radius:10px;}
 .qc-sbox.t1{background:#eff6ff;border:2px solid #bfdbfe;}.qc-sbox.t2{background:#fef2f2;border:2px solid #fecaca;}
-.qc-sbox-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
+.qc-sbox-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
 .qc-sbox.t1 .qc-sbox-name{color:#2563eb;}.qc-sbox.t2 .qc-sbox-name{color:#dc2626;}
-.qc-sbox-val{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;}
+.qc-sbox-val{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;}
 .qc-sbox.t1 .qc-sbox-val{color:#3b82f6;}.qc-sbox.t2 .qc-sbox-val{color:#ef4444;}
 
 /* VERSE CONTROL */
 #verse-control{display:none;margin-bottom:12px;}
 #verse-control.show{display:block;}
-.vc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.vc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .vc-verse-num{font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:1px;}
-.vc-team-badge{padding:4px 12px;border-radius:18px;font-size:12px;font-weight:700;}
+.vc-team-badge{padding:4px 11px;border-radius:18px;font-size:11px;font-weight:700;}
 .vc-team-badge.t1{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;}
 .vc-team-badge.t2{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;}
-.vc-scrambled{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;min-height:40px;}
-.vc-word-btn{padding:8px 12px;border-radius:9px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:#374151;transition:all .15s;}
+.vc-scrambled{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:38px;}
+.vc-word-btn{padding:7px 11px;border-radius:8px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#374151;transition:all .15s;}
 .vc-word-btn:hover{border-color:#0f1523;color:#0f1523;}.vc-word-btn:active{transform:scale(.95);}
-.vc-div{height:1px;background:#f3f4f6;margin:8px 0;}
-.vc-phrase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px;}
-.vc-phrase{display:flex;flex-wrap:wrap;gap:5px;min-height:38px;margin-bottom:12px;}
-.vc-phrase-word{padding:7px 11px;border-radius:8px;background:#eff6ff;border:2px solid #bfdbfe;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:#1d4ed8;transition:all .15s;position:relative;}
+.vc-div{height:1px;background:#f3f4f6;margin:7px 0;}
+.vc-phrase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:5px;}
+.vc-phrase{display:flex;flex-wrap:wrap;gap:5px;min-height:36px;margin-bottom:10px;}
+.vc-phrase-word{padding:6px 10px;border-radius:7px;background:#eff6ff;border:2px solid #bfdbfe;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#1d4ed8;transition:all .15s;}
 .vc-phrase-word:hover{background:#fef2f2;border-color:#fecaca;color:#dc2626;}
 .vc-phrase-empty{color:#d1d5db;font-size:12px;align-self:center;}
-.vc-result-badge{text-align:center;padding:10px;border-radius:9px;font-size:14px;font-weight:700;display:none;margin-bottom:10px;}
+.vc-result-badge{text-align:center;padding:9px;border-radius:8px;font-size:13px;font-weight:700;display:none;margin-bottom:8px;}
 .vc-result-badge.show{display:block;}
-.vc-result-badge.correct{background:#dcfce7;color:#15803d;}
-.vc-result-badge.wrong{background:#fef2f2;color:#dc2626;}
-.vc-actions{display:flex;gap:8px;}
-.vc-verify-btn{flex:1;padding:13px;border-radius:11px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;}
+.vc-result-badge.correct{background:#dcfce7;color:#15803d;}.vc-result-badge.wrong{background:#fef2f2;color:#dc2626;}
+.vc-actions{display:flex;gap:7px;margin-bottom:6px;}
+.vc-verify-btn{flex:2;padding:12px;border-radius:10px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
 .vc-verify-btn:hover{background:#1e2a3e;}
-.vc-next-btn{padding:13px 16px;border-radius:11px;border:2px solid #0f1523;background:#fff;color:#0f1523;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;display:none;}
+.vc-next-btn{padding:12px 14px;border-radius:10px;border:2px solid #0f1523;background:#fff;color:#0f1523;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:none;}
 .vc-next-btn.show{display:block;}
-.vc-start-btn{width:100%;padding:15px;border-radius:11px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;}
+.vc-skip-btn{width:100%;padding:11px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:#6b7280;cursor:pointer;}
+.vc-skip-btn:hover{background:#f3f4f6;}
+.vc-start-btn{width:100%;padding:14px;border-radius:11px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;}
 .vc-start-btn:hover{background:#1e2a3e;}
 
-/* REFS CARD */
-#refs-card{margin-bottom:12px;}
-.refs-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;}
-.ref-list{display:flex;flex-direction:column;gap:5px;}
-.ref-item{display:flex;gap:8px;padding:8px 10px;background:#f9fafb;border-radius:8px;font-size:13px;color:#374151;line-height:1.4;}
-.ref-num{font-weight:700;color:#9ca3af;flex-shrink:0;font-size:11px;padding-top:1px;}
-.ref-empty{font-size:13px;color:#d1d5db;text-align:center;padding:10px 0;}
+/* ACTION ROW */
+#action-row{display:flex;gap:8px;margin-bottom:12px;}
+.act-btn{flex:1;padding:12px 8px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:#6b7280;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s;}
+.act-btn:hover{background:#f9fafb;}.act-btn:active{transform:scale(.97);}
+.act-btn:disabled{opacity:.4;cursor:not-allowed;}
+#btn-lightning{background:#0f1523;border-color:#0f1523;color:#ffd700;font-size:13px;}
+#btn-lightning:hover{background:#1e2a3e;}
+#btn-lightning.cooldown{opacity:.5;cursor:not-allowed;}
+#btn-pause{background:#fff;border-color:#e5e7eb;color:#374151;}
+#btn-pause.paused{background:#f59e0b;border-color:#f59e0b;color:#fff;}
+#btn-lightning-undo{display:none;background:#fff;border-color:#fecaca;color:#dc2626;font-size:11px;}
+#btn-lightning-undo.show{display:flex;}
+
+/* CHALLENGE AWARD */
+#challenge-award{display:none;background:#fffbeb;border:2px solid #f59e0b;border-radius:13px;padding:14px;text-align:center;margin-bottom:12px;}
+#challenge-award.show{display:block;}
+.award-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#92400e;margin-bottom:3px;}
+.award-q{font-size:12px;color:#78350f;margin-bottom:10px;}
+.award-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.award-btn{padding:13px;border-radius:10px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;transition:all .15s;}
+.award-btn:active{transform:scale(.96);}
+#aw-t1{background:#2563eb;color:#fff;}#aw-t1:hover{background:#1d4ed8;}
+#aw-t2{background:#dc2626;color:#fff;}#aw-t2:hover{background:#b91c1c;}
+
+/* HISTORY CARD */
+#history-card{margin-bottom:12px;}
+.hist-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;}
+.hist-list{display:flex;flex-direction:column;gap:4px;}
+.hist-row{display:flex;align-items:center;gap:8px;padding:7px 10px;background:#f9fafb;border-radius:8px;font-size:12px;}
+.hist-round{flex:1;font-weight:600;color:#374151;}
+.hist-pts{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;}
+.hist-pts.t1{color:#3b82f6;}.hist-pts.t2{color:#ef4444;}
+.hist-sep{color:#d1d5db;font-size:12px;}
+.hist-empty{font-size:12px;color:#d1d5db;text-align:center;padding:10px 0;}
+
+/* TIMER */
+#timer-card{margin-bottom:12px;}
+.timer-display{font-family:'Bebas Neue',sans-serif;font-size:52px;letter-spacing:4px;text-align:center;margin-bottom:8px;}
+.timer-display.running{color:#16a34a;}.timer-display.stopped{color:#374151;}.timer-display.low{color:#dc2626;}
+.timer-row{display:flex;gap:8px;align-items:center;}
+.timer-btn{flex:1;padding:10px;border-radius:9px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;}
+.timer-start{border:none;background:#16a34a;color:#fff;}.timer-start:hover{background:#15803d;}
+.timer-reset{border:1.5px solid #e5e7eb;background:#fff;color:#6b7280;}.timer-reset:hover{background:#f3f4f6;}
+.timer-set{display:flex;gap:5px;align-items:center;margin-top:6px;}
+.timer-set input{width:58px;padding:8px 10px;border-radius:8px;border:1.5px solid #e5e7eb;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;text-align:center;outline:none;}
+.timer-set input:focus{border-color:#2563eb;}
+.timer-set label{font-size:12px;color:#6b7280;font-weight:600;}
+.timer-set button{padding:8px 12px;border-radius:8px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
 
 /* FORMS */
-.field{margin-bottom:12px;}
-.field label{display:block;font-size:12px;font-weight:600;color:#6b7280;margin-bottom:5px;letter-spacing:.5px;}
-.field input,.field textarea{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid #e5e7eb;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:600;outline:none;transition:border-color .2s;color:#111827;background:#fff;}
+.field{margin-bottom:11px;}
+.field label{display:block;font-size:11px;font-weight:600;color:#6b7280;margin-bottom:4px;letter-spacing:.5px;}
+.field input,.field textarea{width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid #e5e7eb;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .2s;color:#111827;background:#fff;}
 .field input:focus,.field textarea:focus{border-color:#2563eb;}
 .field textarea{resize:vertical;}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;}
-.primary-btn{padding:12px 20px;border-radius:9px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;}
+.primary-btn{padding:11px 18px;border-radius:9px;border:none;background:#0f1523;color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;}
 .primary-btn:hover{background:#1e2a3e;}.primary-btn:active{transform:scale(.97);}
-.danger-btn{padding:12px 20px;border-radius:9px;border:1.5px solid #fecaca;background:#fff;color:#dc2626;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;}
+.danger-btn{padding:11px 18px;border-radius:9px;border:1.5px solid #fecaca;background:#fff;color:#dc2626;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;}
 .danger-btn:hover{background:#fef2f2;}
-
-/* TYPE TOGGLE */
-.type-toggle{display:flex;gap:7px;margin-bottom:12px;}
-.type-btn{flex:1;padding:10px 7px;border-radius:9px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#6b7280;transition:all .15s;}
+.type-toggle{display:flex;gap:6px;margin-bottom:10px;}
+.type-btn{flex:1;padding:9px 6px;border-radius:9px;border:2px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#6b7280;transition:all .15s;}
 .type-btn.active{border-color:#0f1523;background:#0f1523;color:#fff;}
-
-/* ROUND LIST */
-.list-wrap{background:#fff;border-radius:14px;border:1px solid #e5e7eb;overflow:hidden;}
-.list-head{padding:12px 18px;border-bottom:1px solid #f3f4f6;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;}
-.list-item{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #f9fafb;gap:10px;flex-wrap:wrap;}
-.list-item:last-child{border-bottom:none;}
-.item-num{width:24px;height:24px;border-radius:50%;background:#f3f4f6;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#6b7280;}
-.item-body{flex:1;min-width:0;}
-.item-name{font-size:14px;font-weight:600;color:#111827;}
-.item-sub{font-size:11px;color:#9ca3af;margin-top:1px;}
-.item-actions{display:flex;gap:4px;align-items:center;flex-shrink:0;}
-.mini-btn{width:32px;height:32px;border-radius:7px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .15s;color:#374151;}
-.mini-btn:hover{background:#f3f4f6;}.mini-btn.del:hover{background:#fef2f2;color:#dc2626;border-color:#fecaca;}
-.empty{text-align:center;padding:32px;color:#d1d5db;font-size:13px;}
-
-/* ROUND EXPAND */
-.round-expand-btn{padding:5px 10px;border-radius:7px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#6b7280;white-space:nowrap;transition:all .15s;}
-.round-expand-btn:hover{background:#f3f4f6;}.round-expand-btn.open{background:#0f1523;color:#fff;border-color:#0f1523;}
-.round-questions-panel{display:none;border-top:1px solid #f3f4f6;padding:12px 16px;background:#fafafa;width:100%;}
-.round-questions-panel.open{display:block;}
-.q-list{display:flex;flex-direction:column;gap:5px;margin-bottom:8px;}
-.q-item{display:flex;align-items:flex-start;gap:7px;background:#fff;border-radius:7px;border:1px solid #e5e7eb;padding:9px 11px;}
-.q-item-num{font-size:10px;font-weight:700;color:#9ca3af;flex-shrink:0;padding-top:2px;min-width:16px;}
-.q-item-text{flex:1;font-size:12px;color:#374151;line-height:1.4;}
-.q-item-input{flex:1;padding:3px 7px;border-radius:5px;border:1.5px solid #2563eb;outline:none;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;color:#111827;resize:vertical;min-height:32px;}
-.q-item-actions{display:flex;gap:3px;flex-shrink:0;}
-.q-mini{width:26px;height:26px;border-radius:5px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .15s;color:#6b7280;}
-.q-mini:hover{background:#f3f4f6;}.q-mini.save{background:#2563eb;color:#fff;border-color:#2563eb;}.q-mini.del:hover{background:#fef2f2;color:#dc2626;border-color:#fecaca;}
-.q-add-row{display:flex;gap:7px;align-items:flex-start;}
-.q-add-input{flex:1;padding:8px 10px;border-radius:7px;border:1.5px solid #e5e7eb;outline:none;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;resize:vertical;min-height:36px;}
-.q-add-input:focus{border-color:#2563eb;}
-.q-add-btn{padding:8px 12px;border-radius:7px;border:none;background:#0f1523;color:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;white-space:nowrap;transition:all .15s;}
-.q-add-btn:hover{background:#1e2a3e;}
-.pts-tag-area{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px;}
-.pts-tag{display:flex;align-items:center;gap:5px;background:#f3f4f6;border-radius:7px;padding:6px 10px;font-weight:700;font-size:13px;color:#374151;}
-.pts-tag button{border:none;background:none;cursor:pointer;color:#9ca3af;font-size:13px;line-height:1;padding:0;}
+.pts-tag-area{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-bottom:8px;}
+.pts-tag{display:flex;align-items:center;gap:4px;background:#f3f4f6;border-radius:6px;padding:5px 9px;font-weight:700;font-size:12px;color:#374151;}
+.pts-tag button{border:none;background:none;cursor:pointer;color:#9ca3af;font-size:12px;line-height:1;padding:0;}
 .pts-tag button:hover{color:#dc2626;}
-.add-pt-row{display:flex;gap:7px;align-items:center;}
-.small-input{width:80px;padding:9px 11px;border-radius:7px;border:1.5px solid #e5e7eb;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;outline:none;}
+.add-pt-row{display:flex;gap:6px;align-items:center;}
+.small-input{width:72px;padding:8px 10px;border-radius:7px;border:1.5px solid #e5e7eb;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;outline:none;}
 .small-input:focus{border-color:#2563eb;}
-.small-btn{padding:9px 12px;border-radius:7px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:#374151;transition:all .15s;}
+.small-btn{padding:8px 11px;border-radius:7px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#374151;transition:all .15s;}
 .small-btn:hover{background:#f3f4f6;}
-
-/* DESAFIOS */
-.badge{padding:3px 9px;border-radius:18px;font-size:10px;font-weight:700;white-space:nowrap;}
+.list-wrap{background:#fff;border-radius:13px;border:1px solid #e5e7eb;overflow:hidden;}
+.list-head{padding:11px 16px;border-bottom:1px solid #f3f4f6;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;}
+.list-item{display:flex;align-items:center;padding:11px 14px;border-bottom:1px solid #f9fafb;gap:8px;flex-wrap:wrap;}
+.list-item:last-child{border-bottom:none;}
+.item-num{width:22px;height:22px;border-radius:50%;background:#f3f4f6;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b7280;}
+.item-body{flex:1;min-width:0;}
+.item-name{font-size:13px;font-weight:600;color:#111827;}
+.item-sub{font-size:10px;color:#9ca3af;margin-top:1px;}
+.item-actions{display:flex;gap:3px;align-items:center;flex-shrink:0;}
+.mini-btn{width:30px;height:30px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .15s;color:#374151;}
+.mini-btn:hover{background:#f3f4f6;}.mini-btn.del:hover{background:#fef2f2;color:#dc2626;border-color:#fecaca;}
+.empty{text-align:center;padding:28px;color:#d1d5db;font-size:12px;}
+.round-expand-btn{padding:4px 9px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#6b7280;white-space:nowrap;transition:all .15s;}
+.round-expand-btn:hover{background:#f3f4f6;}.round-expand-btn.open{background:#0f1523;color:#fff;border-color:#0f1523;}
+.round-questions-panel{display:none;border-top:1px solid #f3f4f6;padding:10px 14px;background:#fafafa;width:100%;}
+.round-questions-panel.open{display:block;}
+.q-list{display:flex;flex-direction:column;gap:4px;margin-bottom:7px;}
+.q-item{display:flex;align-items:flex-start;gap:6px;background:#fff;border-radius:6px;border:1px solid #e5e7eb;padding:8px 10px;}
+.q-item-num{font-size:10px;font-weight:700;color:#9ca3af;flex-shrink:0;padding-top:2px;min-width:14px;}
+.q-item-text{flex:1;font-size:11px;color:#374151;line-height:1.4;}
+.q-item-input{flex:1;padding:3px 6px;border-radius:5px;border:1.5px solid #2563eb;outline:none;font-family:'Montserrat',sans-serif;font-size:11px;color:#111827;resize:vertical;min-height:28px;}
+.q-item-actions{display:flex;gap:3px;flex-shrink:0;}
+.q-mini{width:24px;height:24px;border-radius:5px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;color:#6b7280;}
+.q-mini:hover{background:#f3f4f6;}.q-mini.save{background:#2563eb;color:#fff;border-color:#2563eb;}.q-mini.del:hover{background:#fef2f2;color:#dc2626;border-color:#fecaca;}
+.q-add-row{display:flex;gap:6px;align-items:flex-start;}
+.q-add-input{flex:1;padding:7px 9px;border-radius:6px;border:1.5px solid #e5e7eb;outline:none;font-family:'Montserrat',sans-serif;font-size:11px;resize:vertical;min-height:32px;}
+.q-add-input:focus{border-color:#2563eb;}
+.q-add-btn{padding:7px 10px;border-radius:6px;border:none;background:#0f1523;color:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;white-space:nowrap;}
+.badge{padding:2px 8px;border-radius:16px;font-size:10px;font-weight:700;white-space:nowrap;}
 .b-ok{background:#dcfce7;color:#15803d;}.b-used{background:#f3f4f6;color:#9ca3af;}
-.restore-btn{padding:4px 9px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;cursor:pointer;color:#6b7280;}
+.restore-btn{padding:3px 8px;border-radius:5px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;cursor:pointer;color:#6b7280;}
 .restore-btn:hover{background:#f3f4f6;}
-
-
-/* GAME CONTROL */
-.game-ctrl-row{display:flex;gap:8px;margin-bottom:12px;}
-.start-game-btn{flex:2;padding:14px;border-radius:11px;border:none;background:linear-gradient(135deg,#1e3a5f,#0f1523);color:#fff;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:.5px;}
-.start-game-btn:hover{background:linear-gradient(135deg,#2d5a8f,#1e2a3e);}
-.reset-game-btn{flex:1;padding:14px;border-radius:11px;border:1.5px solid #fecaca;background:#fff;color:#dc2626;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;}
-.reset-game-btn:hover{background:#fef2f2;}
-
-/* TOAST */
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(14px);background:#0f1523;color:#fff;padding:10px 20px;border-radius:11px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:999;pointer-events:none;white-space:nowrap;}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(12px);background:#0f1523;color:#fff;padding:9px 18px;border-radius:10px;font-size:12px;font-weight:600;opacity:0;transition:all .3s;z-index:9999;pointer-events:none;white-space:nowrap;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-#fs-prompt{display:none;position:fixed;bottom:20px;right:16px;z-index:9999;background:#0f1523;color:#fff;padding:10px 16px;border-radius:11px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.3);pointer-events:none;}
+#fs-prompt{display:none;position:fixed;bottom:18px;right:14px;z-index:9999;background:#0f1523;color:#fff;padding:9px 14px;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);pointer-events:none;}
 #fs-prompt.show{display:block;pointer-events:all;}
-#error-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#dc2626;color:#fff;padding:12px 20px;font-size:13px;font-weight:600;text-align:center;}
+#error-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#dc2626;color:#fff;padding:10px 18px;font-size:12px;font-weight:600;text-align:center;}
 </style>
 </head>
 <body>
@@ -231,22 +269,36 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
   <div id="nav-brand">
     <div id="status-dot"></div>
     <div id="nav-title">Famílias em Jogo</div>
+    <div id="leader-badge"></div>
   </div>
-  <button id="fs-btn" onclick="toggleFullscreen()" title="Tela Cheia">⛶</button>
+  <button id="fs-btn" onclick="toggleFullscreen()">⛶</button>
   <button class="nav-tab active" onclick="showTab('controle',this)">⚡ Controle</button>
   <button class="nav-tab" onclick="showTab('equipes',this)">👥 Equipes</button>
   <button class="nav-tab" onclick="showTab('rodadas',this)">📋 Rodadas</button>
   <button class="nav-tab" onclick="showTab('desafios',this)">🎯 Desafios</button>
 </div>
 
-<div id="content">
+<div id="modal-overlay">
+  <div id="modal-box">
+    <div id="modal-icon"></div>
+    <div id="modal-title"></div>
+    <div id="modal-msg"></div>
+    <div id="modal-btns">
+      <button id="modal-cancel">Cancelar</button>
+      <button id="modal-confirm">Confirmar</button>
+    </div>
+  </div>
+</div>
 
+<div id="content">
   <!-- CONTROLE -->
   <div class="tab active" id="tab-controle">
     <div class="game-ctrl-row">
-      <button class="start-game-btn" onclick="iniciarJogo()">🚀 Iniciar Jogo</button>
-      <button class="reset-game-btn" onclick="voltarInicio()">↩ Voltar ao Início</button>
+      <button class="start-btn" onclick="iniciarJogo()">🚀 Iniciar Jogo</button>
+      <button class="end-btn" onclick="encerrarJogo()">🏆 Encerrar</button>
+      <button class="reset-btn" onclick="voltarInicio()">↩ Início</button>
     </div>
+
     <div class="card">
       <div id="round-header">
         <div id="round-info">
@@ -258,81 +310,107 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
       </div>
     </div>
 
-    <!-- Normal scoring grid -->
+    <!-- Normal scoring -->
     <div id="teams-grid">
       <div class="team-score-card t1">
         <div class="tc-name" id="t1-disp-name">Equipe 1</div>
         <div class="tc-score" id="t1-disp-score">0</div>
-        <div class="pts-grid" id="t1-pts-grid"><span class="no-pts">Sem pontos</span></div>
+        <div class="pts-grid" id="t1-pts-grid"></div>
       </div>
       <div class="team-score-card t2">
         <div class="tc-name" id="t2-disp-name">Equipe 2</div>
         <div class="tc-score" id="t2-disp-score">0</div>
-        <div class="pts-grid" id="t2-pts-grid"><span class="no-pts">Sem pontos</span></div>
+        <div class="pts-grid" id="t2-pts-grid"></div>
       </div>
     </div>
 
-    <!-- Question by question (normal rounds with questions) -->
+    <!-- Question by question -->
     <div id="question-control">
       <div class="card" id="qc-playing">
         <div class="qc-counter" id="qc-counter">Pergunta 1 de 1</div>
         <div class="qc-question" id="qc-question-text">—</div>
-        <div class="qc-grid" id="qc-score-grid"></div>
-        <button class="qc-next-q-btn" onclick="nextQuestion()">Próxima Pergunta →</button>
-        <button class="qc-skip" onclick="nextQuestion()">Pular sem pontuar</button>
+        <div class="qc-teams-row" id="qc-teams-row"></div>
+        <div class="qc-both-row" id="qc-both-row"></div>
+        <div class="qc-row-btns">
+          <button class="qc-next-btn" onclick="nextQuestion(true)">Próxima Pergunta →</button>
+          <button class="qc-skip-btn" onclick="nextQuestion(false)">Pular</button>
+        </div>
+        <div class="q-history" id="q-history"></div>
       </div>
       <div class="card qc-ended" id="qc-ended" style="display:none">
         <div class="qc-ended-icon">🏁</div>
         <div class="qc-ended-title">Rodada Encerrada</div>
         <div class="qc-ended-sub">Todas as perguntas respondidas</div>
         <div class="qc-scores">
-          <div class="qc-sbox t1"><div class="qc-sbox-name" id="qc-t1-name">Equipe 1</div><div class="qc-sbox-val" id="qc-t1-score">0</div></div>
-          <div class="qc-sbox t2"><div class="qc-sbox-name" id="qc-t2-name">Equipe 2</div><div class="qc-sbox-val" id="qc-t2-score">0</div></div>
+          <div class="qc-sbox t1"><div class="qc-sbox-name" id="qc-t1-name">E1</div><div class="qc-sbox-val" id="qc-t1-score">0</div></div>
+          <div class="qc-sbox t2"><div class="qc-sbox-name" id="qc-t2-name">E2</div><div class="qc-sbox-val" id="qc-t2-score">0</div></div>
         </div>
         <button class="primary-btn" style="width:100%" onclick="nextRound()">Próxima Rodada →</button>
       </div>
     </div>
 
-    <!-- Verse round control -->
+    <!-- Verse control -->
     <div id="verse-control">
-      <!-- Playing state -->
       <div class="card" id="vc-playing" style="display:none">
         <div class="vc-header">
           <div class="vc-verse-num" id="vc-verse-num">Versículo 1 de 1</div>
           <div class="vc-team-badge t1" id="vc-team-badge">Equipe 1</div>
         </div>
         <div class="vc-result-badge" id="vc-result-badge"></div>
-        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:6px;">Palavras — toque para selecionar</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:5px;">Palavras — toque para selecionar</div>
         <div class="vc-scrambled" id="vc-scrambled"></div>
         <div class="vc-div"></div>
         <div class="vc-phrase-label">Frase sendo formada — toque para remover</div>
-        <div class="vc-phrase" id="vc-phrase"><span class="vc-phrase-empty">nenhuma palavra selecionada</span></div>
+        <div class="vc-phrase" id="vc-phrase"></div>
         <div class="vc-actions">
-          <button class="vc-verify-btn" onclick="verifyVerse()">✓ Verificar Resposta</button>
+          <button class="vc-verify-btn" onclick="verifyVerse()">✓ Verificar</button>
           <button class="vc-next-btn" id="vc-next-btn" onclick="nextVerse()">Próximo →</button>
         </div>
-        <button class="qc-skip" onclick="pularVersiculo()" style="margin-top:8px;">Pular versículo sem pontuar →</button>
+        <button class="vc-skip-btn" onclick="pularVersiculo()">Pular versículo sem pontuar →</button>
       </div>
-      <!-- Start button only -->
       <div id="vc-start-area">
         <button class="vc-start-btn" onclick="startVerseRound()">📖 Iniciar Rodada de Versículos</button>
+      </div>
+    </div>
+
+    <!-- Timer -->
+    <div class="card" id="timer-card">
+      <div class="card-title">⏱ Cronômetro</div>
+      <div class="timer-display stopped" id="timer-display">00:30</div>
+      <div class="timer-row">
+        <button class="timer-btn timer-start" id="timer-start-btn" onclick="toggleTimer()">▶ Iniciar</button>
+        <button class="timer-btn timer-reset" onclick="resetTimer()">↺ Resetar</button>
+      </div>
+      <div class="timer-set">
+        <label>Tempo:</label>
+        <input type="number" id="timer-input" value="30" min="5" max="300">
+        <label>seg</label>
+        <button onclick="setTimerDuration()">OK</button>
       </div>
     </div>
 
     <!-- Action row -->
     <div id="action-row">
       <button class="act-btn" onclick="undoLast()">↩ Desfazer</button>
-      <button class="act-btn" id="btn-lightning" onclick="triggerLightning()">⚡ Desafio Relâmpago</button>
+      <button class="act-btn" id="btn-pause" onclick="togglePause()">⏸ Pausar</button>
+      <button class="act-btn" id="btn-lightning" onclick="triggerLightning()">⚡ Relâmpago</button>
+      <button class="act-btn" id="btn-lightning-undo" onclick="undoLightning()">↩ ⚡</button>
     </div>
 
     <!-- Challenge award -->
     <div id="challenge-award">
       <div class="award-label">⚡ Desafio Relâmpago</div>
-      <div class="award-question">Quem respondeu primeiro? (+50 pontos)</div>
+      <div class="award-q">Quem respondeu primeiro? (+50 pontos)</div>
       <div class="award-grid">
         <button class="award-btn" id="aw-t1" onclick="awardChallenge(1)">Equipe 1</button>
         <button class="award-btn" id="aw-t2" onclick="awardChallenge(2)">Equipe 2</button>
       </div>
+    </div>
+
+    <!-- Score history -->
+    <div class="card" id="history-card">
+      <div class="hist-title">📊 Histórico por Rodada</div>
+      <div class="hist-list" id="hist-list"><div class="hist-empty">Sem histórico ainda</div></div>
     </div>
   </div>
 
@@ -346,16 +424,16 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
     </div>
     <div class="card">
       <div class="card-title">Placar</div>
-      <p style="font-size:13px;color:#6b7280;margin-bottom:14px;">Zera a pontuação das duas equipes. Não pode ser desfeito.</p>
+      <p style="font-size:12px;color:#6b7280;margin-bottom:12px;">Zera a pontuação das duas equipes.</p>
       <button class="danger-btn" onclick="resetScores()">🗑 Zerar placar</button>
     </div>
   </div>
 
   <!-- RODADAS -->
   <div class="tab" id="tab-rodadas">
-    <div class="card" style="margin-bottom:14px;">
+    <div class="card" style="margin-bottom:12px;">
       <div class="card-title">Nova Rodada</div>
-      <div class="field"><label>Nome da rodada</label><input id="nr-name" type="text" placeholder="Ex: Bíblia Básica"></div>
+      <div class="field"><label>Nome</label><input id="nr-name" type="text" placeholder="Ex: Bíblia Básica"></div>
       <div class="field">
         <label>Tipo</label>
         <div class="type-toggle">
@@ -380,7 +458,7 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
             <textarea class="q-add-input" id="nv-text" placeholder="Cole o versículo completo..." rows="2"></textarea>
             <button class="q-add-btn" onclick="addVerseToRound()">+ Add</button>
           </div>
-          <div class="q-list" id="nv-list" style="margin-top:8px;"></div>
+          <div class="q-list" id="nv-list" style="margin-top:7px;"></div>
         </div>
       </div>
       <button class="primary-btn" onclick="addRound()">Adicionar rodada</button>
@@ -393,10 +471,10 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
 
   <!-- DESAFIOS -->
   <div class="tab" id="tab-desafios">
-    <div class="card" style="margin-bottom:14px;">
+    <div class="card" style="margin-bottom:12px;">
       <div class="card-title">Novo Desafio Relâmpago</div>
-      <div class="field"><label>Texto do desafio</label><textarea id="nd-text" rows="3" placeholder="Ex: Cite os 12 apóstolos de memória"></textarea></div>
-      <button class="primary-btn" onclick="addChallenge()">Adicionar desafio</button>
+      <div class="field"><label>Texto</label><textarea id="nd-text" rows="3" placeholder="Ex: Cite os 12 apóstolos..."></textarea></div>
+      <button class="primary-btn" onclick="addChallenge()">Adicionar</button>
     </div>
     <div class="list-wrap">
       <div class="list-head">Desafios cadastrados</div>
@@ -422,645 +500,533 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const stateRef = db.doc('game/state');
 let gs = null;
-let newRoundPts = [], newRoundType = 'normal', newVersesList = [], expandedRound = null;
+let newRoundPts=[], newRoundType='normal', newVersesList=[], expandedRound=null;
+let lightningCooldown=false, lightningLastAction=null;
+let timerInterval=null, timerRemaining=30, timerDuration=30, timerRunning=false;
+let questionHistory=[];
+
+// ── MODAL ─────────────────────────────────────────
+function showModal(icon, title, msg, confirmText='Confirmar', confirmClass='', cancelText='Cancelar') {
+  return new Promise(resolve => {
+    document.getElementById('modal-icon').textContent=icon;
+    document.getElementById('modal-title').textContent=title;
+    document.getElementById('modal-msg').textContent=msg;
+    document.getElementById('modal-cancel').textContent=cancelText;
+    const btn=document.getElementById('modal-confirm');
+    btn.textContent=confirmText;
+    btn.className=confirmClass;
+    document.getElementById('modal-overlay').classList.add('show');
+    const confirm=()=>{cleanup();resolve(true);};
+    const cancel=()=>{cleanup();resolve(false);};
+    const cleanup=()=>{
+      document.getElementById('modal-overlay').classList.remove('show');
+      btn.onclick=null; document.getElementById('modal-cancel').onclick=null;
+    };
+    btn.onclick=confirm;
+    document.getElementById('modal-cancel').onclick=cancel;
+  });
+}
 
 // ── INIT ──────────────────────────────────────────
 async function init() {
   try {
-    const snap = await stateRef.get();
-    if (!snap.exists) {
+    const snap=await stateRef.get();
+    if(!snap.exists){
       await stateRef.set({
-        team1Name:'Equipe 1', team2Name:'Equipe 2',
-        team1Score:0, team2Score:0,
-        currentRoundIndex:0, currentQuestionIndex:0,
-        screen:'placar', rounds:[], challenges:[],
-        activeChallenge:null, lastScoreEvent:null, lastAction:null,
-        versiculoState:{active:false}, pendingScreen:null, prevScreen:null
+        team1Name:'Equipe 1',team2Name:'Equipe 2',team1Score:0,team2Score:0,
+        currentRoundIndex:0,currentQuestionIndex:0,screen:'inicio',
+        rounds:[],challenges:[],activeChallenge:null,lastScoreEvent:null,lastAction:null,
+        versiculoState:{active:false},pendingScreen:null,prevScreen:null,
+        roundHistory:[],paused:false
       });
     }
     document.getElementById('status-dot').classList.add('ok');
-  } catch(e) { showError('Erro ao conectar: ' + e.message); }
+  } catch(e){showError('Erro ao conectar: '+e.message);}
 }
 init();
 
-let tabletTransTimer = null;
-
-stateRef.onSnapshot(snap => {
-  if (!snap.exists) return;
-  gs = snap.data();
+let tabletTransTimer=null;
+stateRef.onSnapshot(snap=>{
+  if(!snap.exists)return;
+  gs=snap.data();
   render();
-
-  // Fallback: if screen is 'transicao' and telão isn't handling it,
-  // tablet advances to pendingScreen after 4s
-  if (gs.screen === 'transicao' && gs.pendingScreen) {
-    if (!tabletTransTimer) {
-      tabletTransTimer = setTimeout(async () => {
-        tabletTransTimer = null;
-        try {
-          const snap2 = await stateRef.get();
-          const cur = snap2.data();
-          if (cur.screen === 'transicao' && cur.pendingScreen) {
-            await stateRef.update({screen: cur.pendingScreen, pendingScreen: null});
-          }
-        } catch(e) {}
-      }, 4200);
+  if(gs.screen==='transicao'&&gs.pendingScreen){
+    if(!tabletTransTimer){
+      tabletTransTimer=setTimeout(async()=>{
+        tabletTransTimer=null;
+        try{const s2=(await stateRef.get()).data();if(s2.screen==='transicao'&&s2.pendingScreen)await stateRef.update({screen:s2.pendingScreen,pendingScreen:null});}catch(e){}
+      },4500);
     }
-  } else {
-    if (tabletTransTimer) { clearTimeout(tabletTransTimer); tabletTransTimer = null; }
-  }
-}, err => showError('Firebase: ' + err.message));
+  } else {if(tabletTransTimer){clearTimeout(tabletTransTimer);tabletTransTimer=null;}}
+},err=>showError('Firebase: '+err.message));
 
 // ── RENDER ────────────────────────────────────────
-function render() {
-  if (!gs) return;
-  try {
-    const rounds = gs.rounds || [];
-    const idx = gs.currentRoundIndex ?? 0;
-    const round = rounds[idx];
-    const isVerse = round?.type === 'versiculo';
-    const inVerseScreen = gs.screen === 'versiculo';
-    const questions = round?.questions || [];
-    const hasQuestions = !isVerse && questions.length > 0;
-
-    // Names & scores
-    document.getElementById('t1-disp-name').textContent = gs.team1Name || 'Equipe 1';
-    document.getElementById('t2-disp-name').textContent = gs.team2Name || 'Equipe 2';
-    document.getElementById('t1-disp-score').textContent = gs.team1Score ?? 0;
-    document.getElementById('t2-disp-score').textContent = gs.team2Score ?? 0;
-    document.getElementById('in-t1').value = gs.team1Name || '';
-    document.getElementById('in-t2').value = gs.team2Name || '';
-    document.getElementById('ctrl-round-name').textContent = round?.name || '—';
-
-    // ── CONTROLE TAB DISPLAY LOGIC ─────────────────
-    const teamsGrid    = document.getElementById('teams-grid');
-    const questionCtrl = document.getElementById('question-control');
-    const verseCtrl    = document.getElementById('verse-control');
-
-    if (isVerse) {
-      // Show scores when not actively playing verse round
-      teamsGrid.style.display    = inVerseScreen ? 'none' : 'grid';
-      questionCtrl.style.display = 'none';
-      verseCtrl.style.display    = 'block';
-      renderPtBtns(1, round, gs.team1Name || 'Equipe 1');
-      renderPtBtns(2, round, gs.team2Name || 'Equipe 2');
-      renderVerseControl(round, inVerseScreen);
-    } else if (hasQuestions) {
-      teamsGrid.style.display    = 'none';
-      questionCtrl.style.display = 'block';
-      verseCtrl.style.display    = 'none';
-      renderQuestionControl(round, questions);
+function render(){
+  if(!gs)return;
+  try{
+    const rounds=gs.rounds||[], idx=gs.currentRoundIndex??0, round=rounds[idx];
+    const isVerse=round?.type==='versiculo', inVerseScreen=gs.screen==='versiculo';
+    const questions=round?.questions||[], hasQuestions=!isVerse&&questions.length>0;
+    document.getElementById('t1-disp-name').textContent=gs.team1Name||'Equipe 1';
+    document.getElementById('t2-disp-name').textContent=gs.team2Name||'Equipe 2';
+    document.getElementById('t1-disp-score').textContent=gs.team1Score??0;
+    document.getElementById('t2-disp-score').textContent=gs.team2Score??0;
+    document.getElementById('in-t1').value=gs.team1Name||'';
+    document.getElementById('in-t2').value=gs.team2Name||'';
+    document.getElementById('ctrl-round-name').textContent=round?.name||'—';
+    updateLeaderBadge();
+    const teamsGrid=document.getElementById('teams-grid');
+    const questionCtrl=document.getElementById('question-control');
+    const verseCtrl=document.getElementById('verse-control');
+    if(isVerse){
+      teamsGrid.style.display=inVerseScreen?'none':'grid';
+      questionCtrl.style.display='none';
+      verseCtrl.style.display='block';
+      renderPtBtns(1,round); renderPtBtns(2,round);
+      renderVerseControl(round,inVerseScreen);
+    } else if(hasQuestions){
+      teamsGrid.style.display='none';
+      questionCtrl.style.display='block';
+      verseCtrl.style.display='none';
+      renderQuestionControl(round,questions);
     } else {
-      teamsGrid.style.display    = 'grid';
-      questionCtrl.style.display = 'none';
-      verseCtrl.style.display    = 'none';
-      renderPtBtns(1, round, gs.team1Name || 'Equipe 1');
-      renderPtBtns(2, round, gs.team2Name || 'Equipe 2');
+      teamsGrid.style.display='grid';
+      questionCtrl.style.display='none';
+      verseCtrl.style.display='none';
+      renderPtBtns(1,round); renderPtBtns(2,round);
     }
-
-    // ── CHALLENGE AWARD ────────────────────────────
-    const award = document.getElementById('challenge-award');
-    if (gs.screen === 'relampago2') {
+    const award=document.getElementById('challenge-award');
+    if(gs.screen==='relampago2'){
       award.classList.add('show');
-      document.getElementById('aw-t1').textContent = gs.team1Name || 'Equipe 1';
-      document.getElementById('aw-t2').textContent = gs.team2Name || 'Equipe 2';
-    } else {
-      award.classList.remove('show');
-    }
-    const lBtn = document.getElementById('btn-lightning');
-    lBtn.textContent = gs.screen === 'relampago1' ? '⚡ Mostrar Desafio' : '⚡ Desafio Relâmpago';
-
-    // Lists
+      document.getElementById('aw-t1').textContent=gs.team1Name||'Equipe 1';
+      document.getElementById('aw-t2').textContent=gs.team2Name||'Equipe 2';
+    } else {award.classList.remove('show');}
+    const lBtn=document.getElementById('btn-lightning');
+    lBtn.textContent=gs.screen==='relampago1'?'⚡ Mostrar Desafio':'⚡ Relâmpago';
+    if(lightningCooldown)lBtn.classList.add('cooldown');else lBtn.classList.remove('cooldown');
+    const pauseBtn=document.getElementById('btn-pause');
+    if(gs.screen==='paused'){pauseBtn.classList.add('paused');pauseBtn.textContent='▶ Retomar';}
+    else{pauseBtn.classList.remove('paused');pauseBtn.textContent='⏸ Pausar';}
     renderRounds(rounds);
-    renderChallenges(gs.challenges || []);
-  } catch(e) { console.error('render error:', e); }
+    renderChallenges(gs.challenges||[]);
+    renderHistory();
+  }catch(e){console.error('render:',e);}
+}
+
+function updateLeaderBadge(){
+  if(!gs)return;
+  const s1=gs.team1Score??0,s2=gs.team2Score??0;
+  const badge=document.getElementById('leader-badge');
+  if(s1===0&&s2===0){badge.classList.remove('show');return;}
+  badge.classList.add('show');
+  if(s1>s2){badge.className='leader-badge show t1';badge.textContent='👑 '+(gs.team1Name||'E1')+' lidera';}
+  else if(s2>s1){badge.className='leader-badge show t2';badge.textContent='👑 '+(gs.team2Name||'E2')+' lidera';}
+  else{badge.className='leader-badge show tie';badge.textContent='🤝 Empate';}
 }
 
 // ── VERSE CONTROL ─────────────────────────────────
-function renderVerseControl(round, inVerseScreen) {
-  const vcPlaying   = document.getElementById('vc-playing');
-  const vcStartArea = document.getElementById('vc-start-area');
-  const vs = gs.versiculoState;
-
-  if (inVerseScreen && vs?.active) {
-    vcPlaying.style.display   = 'block';
-    vcStartArea.style.display = 'none';
-    const total = round?.verses?.length || 0;
-    const vIdx  = vs.verseIndex || 0;
-    document.getElementById('vc-verse-num').textContent = 'Versículo ' + (vIdx+1) + ' de ' + total;
-    const t = vs.activeTeam || 1;
-    const tName = t===1 ? (gs.team1Name||'Equipe 1') : (gs.team2Name||'Equipe 2');
-    const badge = document.getElementById('vc-team-badge');
-    badge.textContent = tName;
-    badge.className = 'vc-team-badge t' + t;
-    const scrambled = vs.scrambled || [];
-    document.getElementById('vc-scrambled').innerHTML = scrambled.length
-      ? scrambled.map((w,i) => '<button class="vc-word-btn" onclick="selectWord('+i+')">'+w.word+'</button>').join('')
-      : '<span style="color:#d1d5db;font-size:12px;">Todas selecionadas</span>';
-    const selected = vs.selected || [];
-    document.getElementById('vc-phrase').innerHTML = selected.length
-      ? selected.map((w,i) => '<div class="vc-phrase-word" onclick="deselectWord('+i+')">'+w.word+'</div>').join('')
-      : '<span class="vc-phrase-empty">nenhuma palavra selecionada</span>';
-    const badge2 = document.getElementById('vc-result-badge');
-    const nextBtn = document.getElementById('vc-next-btn');
-    if (vs.phase === 'correct') {
-      badge2.textContent = '✓ Correto! +50 pontos';
-      badge2.className = 'vc-result-badge show correct';
-      nextBtn.classList.add('show');
-    } else if (vs.phase === 'wrong') {
-      badge2.textContent = '✗ Errado! Sem pontos.';
-      badge2.className = 'vc-result-badge show wrong';
-      nextBtn.classList.add('show');
-    } else {
-      badge2.className = 'vc-result-badge';
-      nextBtn.classList.remove('show');
-    }
+function renderVerseControl(round,inVerseScreen){
+  const vcPlaying=document.getElementById('vc-playing'), vcStart=document.getElementById('vc-start-area');
+  const vs=gs.versiculoState;
+  if(inVerseScreen&&vs?.active){
+    vcPlaying.style.display='block'; vcStart.style.display='none';
+    const total=round?.verses?.length||0, vIdx=vs.verseIndex||0;
+    document.getElementById('vc-verse-num').textContent='Versículo '+(vIdx+1)+' de '+total;
+    const t=vs.activeTeam||1, tName=t===1?(gs.team1Name||'E1'):(gs.team2Name||'E2');
+    const badge=document.getElementById('vc-team-badge');
+    badge.textContent=tName; badge.className='vc-team-badge t'+t;
+    const scrambled=vs.scrambled||[];
+    document.getElementById('vc-scrambled').innerHTML=scrambled.length
+      ?scrambled.map((w,i)=>'<button class="vc-word-btn" onclick="selectWord('+i+')">'+w.word+'</button>').join('')
+      :'<span style="color:#d1d5db;font-size:11px;">Todas selecionadas</span>';
+    const selected=vs.selected||[];
+    document.getElementById('vc-phrase').innerHTML=selected.length
+      ?selected.map((w,i)=>'<div class="vc-phrase-word" onclick="deselectWord('+i+')">'+w.word+'</div>').join('')
+      :'<span class="vc-phrase-empty">nenhuma selecionada</span>';
+    const rb=document.getElementById('vc-result-badge'), nb=document.getElementById('vc-next-btn');
+    if(vs.phase==='correct'){rb.textContent='✓ Correto! +50';rb.className='vc-result-badge show correct';nb.classList.add('show');}
+    else if(vs.phase==='wrong'){rb.textContent='✗ Errado!';rb.className='vc-result-badge show wrong';nb.classList.add('show');}
+    else{rb.className='vc-result-badge';nb.classList.remove('show');}
   } else {
-    vcPlaying.style.display   = 'none';
-    vcStartArea.style.display = 'block';
+    vcPlaying.style.display='none'; vcStart.style.display='block';
   }
 }
 
 // ── QUESTION CONTROL ──────────────────────────────
-function renderQuestionControl(round, questions) {
-  const qIdx  = gs.currentQuestionIndex ?? 0;
-  const isDone = qIdx >= questions.length;
-  document.getElementById('qc-playing').style.display = isDone ? 'none' : 'block';
-  document.getElementById('qc-ended').style.display   = isDone ? 'block' : 'none';
-  if (isDone) {
-    document.getElementById('qc-t1-name').textContent  = gs.team1Name || 'Equipe 1';
-    document.getElementById('qc-t2-name').textContent  = gs.team2Name || 'Equipe 2';
-    document.getElementById('qc-t1-score').textContent = gs.team1Score ?? 0;
-    document.getElementById('qc-t2-score').textContent = gs.team2Score ?? 0;
+function renderQuestionControl(round,questions){
+  const qIdx=gs.currentQuestionIndex??0, isDone=qIdx>=questions.length;
+  document.getElementById('qc-playing').style.display=isDone?'none':'block';
+  document.getElementById('qc-ended').style.display=isDone?'block':'none';
+  if(isDone){
+    document.getElementById('qc-t1-name').textContent=gs.team1Name||'E1';
+    document.getElementById('qc-t2-name').textContent=gs.team2Name||'E2';
+    document.getElementById('qc-t1-score').textContent=gs.team1Score??0;
+    document.getElementById('qc-t2-score').textContent=gs.team2Score??0;
     return;
   }
-  const q = questions[qIdx];
-  document.getElementById('qc-counter').textContent      = 'Pergunta ' + (qIdx+1) + ' de ' + questions.length;
-  document.getElementById('qc-question-text').textContent = q?.text || '—';
-  const pts    = round?.points || [10];
-  const t1Name = gs.team1Name || 'Equipe 1';
-  const t2Name = gs.team2Name || 'Equipe 2';
-  document.getElementById('qc-score-grid').innerHTML =
-    '<div class="qc-teams-row">'
-    + '<div class="qc-col t1"><div class="qc-col-label">'+t1Name+'</div>'
-    + pts.map(p=>'<button class="qc-btn t1" onclick="addScore(1,'+p+')">+'+p+'</button>').join('')+'</div>'
-    + '<div class="qc-col t2"><div class="qc-col-label">'+t2Name+'</div>'
-    + pts.map(p=>'<button class="qc-btn t2" onclick="addScore(2,'+p+')">+'+p+'</button>').join('')+'</div>'
-    + '</div>'
-    + '<div class="qc-both-row">'
-    + pts.map(p=>'<button class="qc-btn both" onclick="scoreBoth('+p+')">Ambas +'+p+'</button>').join('')
-    + '</div>';
+  const q=questions[qIdx];
+  document.getElementById('qc-counter').textContent='Pergunta '+(qIdx+1)+' de '+questions.length;
+  document.getElementById('qc-question-text').textContent=q?.text||'—';
+  const pts=round?.points||[10], t1=gs.team1Name||'E1', t2=gs.team2Name||'E2';
+  document.getElementById('qc-teams-row').innerHTML=
+    '<div class="qc-col t1"><div class="qc-col-label">'+t1+'</div>'
+    +pts.map(p=>'<button class="qc-btn t1" onclick="addScore(1,'+p+',true)">+'+p+'</button>').join('')+'</div>'
+    +'<div class="qc-col t2"><div class="qc-col-label">'+t2+'</div>'
+    +pts.map(p=>'<button class="qc-btn t2" onclick="addScore(2,'+p+',true)">+'+p+'</button>').join('')+'</div>';
+  document.getElementById('qc-both-row').innerHTML=
+    pts.map(p=>'<button class="qc-btn both" onclick="scoreBoth('+p+',true)">Ambas +'+p+'</button>').join('');
+  renderQuestionHistory();
 }
 
-function renderPtBtns(team, round, name) {
-  const el  = document.getElementById('t'+team+'-pts-grid');
-  const pts = round?.points || [];
-  const cls = 'pt-btn t'+team+'-pt';
-  el.innerHTML = pts.length
-    ? pts.map(p=>'<button class="'+cls+'" onclick="addScore('+team+','+p+')">+'+p+'</button>').join('')
-    : '<span class="no-pts">Sem pontos</span>';
+function renderQuestionHistory(){
+  const el=document.getElementById('q-history');
+  if(!questionHistory.length){el.innerHTML='';return;}
+  el.innerHTML='<div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin-bottom:4px;margin-top:8px;">Respondidas nesta rodada</div>'
+    +questionHistory.map(h=>{
+      const dot=h.who==='t1'?'t1':h.who==='t2'?'t2':h.who==='both'?'both':'skip';
+      const label=h.who==='t1'?(gs.team1Name||'E1')+' +'+h.pts:h.who==='t2'?(gs.team2Name||'E2')+' +'+h.pts:h.who==='both'?'Ambas +'+h.pts:'Pulada';
+      return '<div class="q-hist-item"><div class="q-hist-dot '+dot+'"></div><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+h.q+'</span><span style="font-weight:700;color:#374151;">'+label+'</span></div>';
+    }).join('');
+}
+
+function renderPtBtns(team,round){
+  const el=document.getElementById('t'+team+'-pts-grid');
+  const pts=round?.points||[];
+  el.innerHTML=pts.length?pts.map(p=>'<button class="pt-btn t'+team+'-pt" onclick="addScore('+team+','+p+')">+'+p+'</button>').join(''):'<span class="no-pts">Sem pontos</span>';
 }
 
 // ── SCORING ───────────────────────────────────────
-async function addScore(team, pts) {
-  if (!gs) return;
-  try {
-    const prev = team===1 ? (gs.team1Score??0) : (gs.team2Score??0);
-    const upd  = { lastScoreEvent:{team,points:pts,ts:Date.now()}, lastAction:{team,prevScore:prev,points:pts} };
-    upd[team===1?'team1Score':'team2Score'] = prev + pts;
-    await stateRef.update(upd);
-  } catch(e) { showError('Erro: '+e.message); }
-}
-
-async function scoreBoth(pts) {
-  if (!gs) return;
-  try {
-    const p1 = gs.team1Score??0, p2 = gs.team2Score??0;
-    await stateRef.update({
-      team1Score: p1+pts, team2Score: p2+pts,
-      lastScoreEvent:{team:1,points:pts,ts:Date.now()},
-      lastAction:{team:'both',prevScore1:p1,prevScore2:p2,points:pts}
-    });
-    toast('🎉 Ambas +'+pts+'!');
-  } catch(e) { showError('Erro: '+e.message); }
-}
-
-async function undoLast() {
-  if (!gs?.lastAction) { toast('Nada para desfazer'); return; }
-  try {
-    const a = gs.lastAction;
-    const upd = {lastAction:null};
-    if (a.team === 'both') {
-      upd.team1Score = a.prevScore1;
-      upd.team2Score = a.prevScore2;
-    } else {
-      upd[a.team===1?'team1Score':'team2Score'] = a.prevScore;
+async function addScore(team,pts,fromQuestion=false){
+  if(!gs)return;
+  try{
+    const prev=team===1?(gs.team1Score??0):(gs.team2Score??0);
+    const upd={lastScoreEvent:{team,points:pts,ts:Date.now()},lastAction:{team,prevScore:prev,points:pts,type:'score'}};
+    upd[team===1?'team1Score':'team2Score']=prev+pts;
+    if(fromQuestion){
+      const rounds=gs.rounds||[], idx=gs.currentRoundIndex??0, round=rounds[idx];
+      const questions=round?.questions||[], qIdx=gs.currentQuestionIndex??0;
+      questionHistory.push({q:questions[qIdx]?.text||'?',who:'t'+team,pts});
     }
     await stateRef.update(upd);
-    toast('↩ Desfeito');
-  } catch(e) { showError('Erro: '+e.message); }
+    toast('+'+ pts+' '+(team===1?(gs.team1Name||'E1'):(gs.team2Name||'E2')));
+  }catch(e){showError('Erro: '+e.message);}
 }
 
-// ── ROUNDS NAV ────────────────────────────────────
-async function nextRound() {
-  if (!gs) return;
-  const rounds = gs.rounds||[], idx = gs.currentRoundIndex??0;
-  if (idx >= rounds.length-1) { toast('Já é a última rodada'); return; }
-  await stateRef.update({currentRoundIndex:idx+1, screen:'transicao', currentQuestionIndex:0, pendingScreen:'placar'});
+async function scoreBoth(pts,fromQuestion=false){
+  if(!gs)return;
+  try{
+    const p1=gs.team1Score??0, p2=gs.team2Score??0;
+    await stateRef.update({
+      team1Score:p1+pts,team2Score:p2+pts,
+      lastScoreEvent:{team:1,points:pts,ts:Date.now()},
+      lastAction:{team:'both',prevScore1:p1,prevScore2:p2,points:pts,type:'score'}
+    });
+    if(fromQuestion){
+      const rounds=gs.rounds||[], idx=gs.currentRoundIndex??0, round=rounds[idx];
+      const questions=round?.questions||[], qIdx=gs.currentQuestionIndex??0;
+      questionHistory.push({q:questions[qIdx]?.text||'?',who:'both',pts});
+    }
+    toast('🎉 Ambas +'+pts+'!');
+  }catch(e){showError('Erro: '+e.message);}
 }
-async function prevRound() {
-  if (!gs) return;
-  const idx = gs.currentRoundIndex??0;
-  if (idx <= 0) { toast('Já é a primeira rodada'); return; }
-  await stateRef.update({currentRoundIndex:idx-1, screen:'placar', currentQuestionIndex:0});
+
+async function undoLast(){
+  if(!gs?.lastAction){toast('Nada para desfazer');return;}
+  try{
+    const a=gs.lastAction, upd={lastAction:null};
+    if(a.team==='both'){upd.team1Score=a.prevScore1;upd.team2Score=a.prevScore2;}
+    else{upd[a.team===1?'team1Score':'team2Score']=a.prevScore;}
+    await stateRef.update(upd);
+    questionHistory.pop();
+    toast('↩ Desfeito');
+  }catch(e){showError('Erro: '+e.message);}
 }
 
 // ── QUESTION NAV ──────────────────────────────────
-async function nextQuestion() {
-  if (!gs) return;
+async function nextQuestion(scored=false){
+  if(!gs)return;
+  if(!scored){
+    const rounds=gs.rounds||[], idx=gs.currentRoundIndex??0, round=rounds[idx];
+    const questions=round?.questions||[], qIdx=gs.currentQuestionIndex??0;
+    if(qIdx<questions.length) questionHistory.push({q:questions[qIdx]?.text||'?',who:'skip',pts:0});
+  }
   await stateRef.update({currentQuestionIndex:(gs.currentQuestionIndex??0)+1});
+  renderQuestionHistory();
+}
+
+// ── ROUND NAV ─────────────────────────────────────
+async function nextRound(){
+  if(!gs)return;
+  const rounds=gs.rounds||[], idx=gs.currentRoundIndex??0;
+  if(idx>=rounds.length-1){toast('Última rodada');return;}
+  questionHistory=[];
+  await stateRef.update({currentRoundIndex:idx+1,screen:'transicao',currentQuestionIndex:0,pendingScreen:'placar'});
+}
+async function prevRound(){
+  if(!gs)return;
+  const idx=gs.currentRoundIndex??0;
+  if(idx<=0){toast('Primeira rodada');return;}
+  questionHistory=[];
+  await stateRef.update({currentRoundIndex:idx-1,screen:'placar',currentQuestionIndex:0});
 }
 
 // ── VERSE ROUND ───────────────────────────────────
-function shuffleWords(text) {
-  const words   = text.trim().split(/\s+/);
-  const indexed = words.map((w,i)=>({word:w,origIdx:i}));
-  for (let i=indexed.length-1;i>0;i--) {
-    const j=Math.floor(Math.random()*(i+1));
-    [indexed[i],indexed[j]]=[indexed[j],indexed[i]];
-  }
+function shuffleWords(text){
+  const words=text.trim().split(/\s+/);
+  const indexed=words.map((w,i)=>({word:w,origIdx:i}));
+  for(let i=indexed.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[indexed[i],indexed[j]]=[indexed[j],indexed[i]];}
   return indexed;
 }
-
-async function startVerseRound() {
-  toast('Iniciando...');
-  if (!gs) { toast('Erro: estado não carregado'); return; }
-  const rounds = gs.rounds || [];
-  const idx = gs.currentRoundIndex ?? 0;
-  const round = rounds[idx];
-  if (!round) { toast('Erro: nenhuma rodada encontrada'); return; }
-  if (round.type !== 'versiculo') { toast('Erro: tipo=' + round.type); return; }
-  const verses = round.verses || [];
-  if (!verses.length) { toast('Sem versículos cadastrados nesta rodada'); return; }
-  try {
-    const scrambled = shuffleWords(verses[0].text);
-    await stateRef.update({
-      screen:'transicao', pendingScreen:'versiculo',
-      versiculoState:{active:true,verseIndex:0,scrambled,selected:[],activeTeam:1,phase:'selecting',vsTs:Date.now()}
-    });
-    toast('Rodada iniciada!');
-  } catch(e) {
-    toast('Erro Firebase: ' + e.message);
-    showError('Erro ao iniciar: ' + e.message);
-  }
+async function startVerseRound(){
+  if(!gs)return;
+  const round=(gs.rounds||[])[gs.currentRoundIndex??0];
+  const verses=round?.verses||[];
+  if(!verses.length){toast('Sem versículos cadastrados');return;}
+  const scrambled=shuffleWords(verses[0].text);
+  await stateRef.update({screen:'transicao',pendingScreen:'versiculo',versiculoState:{active:true,verseIndex:0,scrambled,selected:[],activeTeam:1,phase:'selecting',vsTs:Date.now()}});
 }
-
-async function selectWord(i) {
-  if (!gs?.versiculoState) return;
-  const vs = gs.versiculoState;
-  if (vs.phase !== 'selecting') return;
-  const scrambled=[...vs.scrambled], selected=[...vs.selected];
-  const w=scrambled.splice(i,1)[0];
-  selected.push(w);
+async function selectWord(i){
+  if(!gs?.versiculoState||gs.versiculoState.phase!=='selecting')return;
+  const vs=gs.versiculoState, scrambled=[...vs.scrambled], selected=[...vs.selected];
+  const w=scrambled.splice(i,1)[0]; selected.push(w);
   await stateRef.update({'versiculoState.scrambled':scrambled,'versiculoState.selected':selected});
 }
-
-async function deselectWord(i) {
-  if (!gs?.versiculoState) return;
-  const vs = gs.versiculoState;
-  if (vs.phase !== 'selecting') return;
-  const scrambled=[...vs.scrambled], selected=[...vs.selected];
-  const w=selected.splice(i,1)[0];
-  scrambled.push(w);
+async function deselectWord(i){
+  if(!gs?.versiculoState||gs.versiculoState.phase!=='selecting')return;
+  const vs=gs.versiculoState, scrambled=[...vs.scrambled], selected=[...vs.selected];
+  const w=selected.splice(i,1)[0]; scrambled.push(w);
   await stateRef.update({'versiculoState.scrambled':scrambled,'versiculoState.selected':selected});
 }
-
-async function verifyVerse() {
-  if (!gs?.versiculoState) return;
+async function verifyVerse(){
+  if(!gs?.versiculoState)return;
   const vs=gs.versiculoState;
-  if (vs.phase !== 'selecting') { toast('Já verificado — avance para o próximo'); return; }
-  const round  = (gs.rounds||[])[gs.currentRoundIndex??0];
-  const verse  = round?.verses?.[vs.verseIndex];
-  if (!verse) return;
-  const orig   = verse.text.trim().split(/\s+/);
-  const sel    = vs.selected.map(w=>w.word);
-  if (sel.length !== orig.length) { toast('Selecione todas as '+orig.length+' palavras!'); return; }
-  const correct = sel.join(' ')===orig.join(' ');
-  if (correct) {
+  if(vs.phase!=='selecting'){toast('Já verificado — avance para próximo');return;}
+  const round=(gs.rounds||[])[gs.currentRoundIndex??0];
+  const verse=round?.verses?.[vs.verseIndex];
+  if(!verse)return;
+  const orig=verse.text.trim().split(/\s+/), sel=vs.selected.map(w=>w.word);
+  if(sel.length!==orig.length){toast('Selecione todas as '+orig.length+' palavras!');return;}
+  const correct=sel.join(' ')===orig.join(' ');
+  if(correct){
     const team=vs.activeTeam, prev=team===1?(gs.team1Score??0):(gs.team2Score??0);
-    const upd={'versiculoState.phase':'correct',lastScoreEvent:{team,points:50,ts:Date.now()},lastAction:{team,prevScore:prev,points:50}};
+    const upd={'versiculoState.phase':'correct',lastScoreEvent:{team,points:50,ts:Date.now()},lastAction:{team,prevScore:prev,points:50,type:'verse'}};
     upd[team===1?'team1Score':'team2Score']=prev+50;
     await stateRef.update(upd);
-  } else {
-    await stateRef.update({'versiculoState.phase':'wrong'});
-  }
+  } else {await stateRef.update({'versiculoState.phase':'wrong'});}
 }
-
-async function nextVerse() {
-  if (!gs?.versiculoState) return;
-  const vs     = gs.versiculoState;
-  const round  = (gs.rounds||[])[gs.currentRoundIndex??0];
-  const verses = round?.verses||[];
-  const next   = vs.verseIndex+1;
-  if (next >= verses.length) {
-    await stateRef.update({screen:'placar', versiculoState:{active:false}});
-    toast('Rodada de versículos concluída! 🎉');
-    return;
-  }
-  const nextTeam  = vs.activeTeam===1?2:1;
-  const scrambled = shuffleWords(verses[next].text);
-  await stateRef.update({versiculoState:{active:true,verseIndex:next,scrambled,selected:[],activeTeam:nextTeam,phase:'selecting',vsTs:Date.now()}});
+async function nextVerse(){
+  if(!gs?.versiculoState)return;
+  const vs=gs.versiculoState, round=(gs.rounds||[])[gs.currentRoundIndex??0];
+  const verses=round?.verses||[], next=vs.verseIndex+1;
+  if(next>=verses.length){await stateRef.update({screen:'placar',versiculoState:{active:false}});toast('Rodada encerrada!');return;}
+  const scrambled=shuffleWords(verses[next].text);
+  await stateRef.update({versiculoState:{active:true,verseIndex:next,scrambled,selected:[],activeTeam:vs.activeTeam===1?2:1,phase:'selecting',vsTs:Date.now()}});
 }
-
-
-// ── JOGO CONTROL ──────────────────────────────────
-async function iniciarJogo() {
-  if (!confirm('Iniciar o jogo no telão?')) return;
-  await stateRef.update({screen:'loading', currentRoundIndex:0, currentQuestionIndex:0,
-    team1Score:0, team2Score:0, lastAction:null, lastScoreEvent:null,
-    versiculoState:{active:false}});
-  toast('Iniciando...');
-  // Fallback: advance to placar after 8s if telão doesn't do it
-  setTimeout(async()=>{
-    try{const s=(await stateRef.get()).data();if(s.screen==='loading')await stateRef.update({screen:'placar'});}catch(e){}
-  },30000);
-}
-
-async function voltarInicio() {
-  if (!confirm('Voltar ao início? O placar será zerado.')) return;
-  await stateRef.update({
-    screen:'inicio', currentRoundIndex:0, currentQuestionIndex:0,
-    team1Score:0, team2Score:0, lastAction:null, lastScoreEvent:null,
-    activeChallenge:null, versiculoState:{active:false}, pendingScreen:null, prevScreen:null
-  });
-  toast('Voltando ao início...');
-}
-
-async function pularVersiculo() {
-  if (!gs?.versiculoState) return;
-  const vs = gs.versiculoState;
-  const round = (gs.rounds||[])[gs.currentRoundIndex??0];
-  const verses = round?.verses||[];
-  const next = vs.verseIndex + 1;
-  if (next >= verses.length) {
-    await stateRef.update({screen:'placar', versiculoState:{active:false}});
-    toast('Rodada de versículos encerrada!');
-    return;
-  }
-  const nextTeam = vs.activeTeam===1?2:1;
-  const scrambled = shuffleWords(verses[next].text);
-  await stateRef.update({
-    versiculoState:{active:true,verseIndex:next,scrambled,selected:[],activeTeam:nextTeam,phase:'selecting',vsTs:Date.now()}
-  });
-  toast('Versículo pulado — próxima equipe!');
+async function pularVersiculo(){
+  const ok=await showModal('⏭','Pular Versículo','Pular sem pontuar e passar para a outra equipe?','Pular','danger');
+  if(!ok)return;
+  if(!gs?.versiculoState)return;
+  const vs=gs.versiculoState, round=(gs.rounds||[])[gs.currentRoundIndex??0];
+  const verses=round?.verses||[], next=vs.verseIndex+1;
+  if(next>=verses.length){await stateRef.update({screen:'placar',versiculoState:{active:false}});toast('Rodada encerrada!');return;}
+  const scrambled=shuffleWords(verses[next].text);
+  await stateRef.update({versiculoState:{active:true,verseIndex:next,scrambled,selected:[],activeTeam:vs.activeTeam===1?2:1,phase:'selecting',vsTs:Date.now()}});
+  toast('Versículo pulado!');
 }
 
 // ── LIGHTNING ─────────────────────────────────────
-async function triggerLightning() {
-  if (!gs) return;
+async function triggerLightning(){
+  if(lightningCooldown){toast('Aguarde...');return;}
+  if(!gs)return;
   const screen=gs.screen, chs=gs.challenges||[];
-  if (screen==='relampago1') {
+  if(screen==='relampago1'){
     const next=chs.find(c=>!c.used);
-    if (!next) { toast('Sem desafios disponíveis!'); return; }
+    if(!next){toast('Sem desafios!');return;}
     const updated=chs.map(c=>c.id===next.id?{...c,used:true}:c);
     await stateRef.update({screen:'relampago2',activeChallenge:{id:next.id,text:next.text},challenges:updated});
   } else {
     const next=chs.find(c=>!c.used);
-    if (!next) { toast('Sem desafios disponíveis!'); return; }
+    if(!next){toast('Sem desafios!');return;}
+    lightningCooldown=true;
+    document.getElementById('btn-lightning').classList.add('cooldown');
+    setTimeout(()=>{lightningCooldown=false;document.getElementById('btn-lightning').classList.remove('cooldown');},3000);
     await stateRef.update({screen:'relampago1',prevScreen:screen,activeChallenge:null});
   }
 }
-
-async function awardChallenge(team) {
-  if (!gs) return;
-  const name=team===1?(gs.team1Name||'Equipe 1'):(gs.team2Name||'Equipe 2');
+async function awardChallenge(team){
+  if(!gs)return;
+  const name=team===1?(gs.team1Name||'E1'):(gs.team2Name||'E2');
   const prev=team===1?(gs.team1Score??0):(gs.team2Score??0);
   const ret=gs.prevScreen||'placar';
-  const upd={screen:ret,prevScreen:null,activeChallenge:null,lastScoreEvent:{team,points:50,ts:Date.now()},lastAction:{team,prevScore:prev,points:50}};
+  const upd={screen:ret,prevScreen:null,activeChallenge:null,lastScoreEvent:{team,points:50,ts:Date.now()},lastAction:{team,prevScore:prev,points:50,type:'lightning'}};
   upd[team===1?'team1Score':'team2Score']=prev+50;
+  lightningLastAction={team,prevScore:prev};
   await stateRef.update(upd);
-  toast('🎉 +50 para '+name+'!');
+  toast('⚡ +50 para '+name+'!');
+  document.getElementById('btn-lightning-undo').classList.add('show');
+  setTimeout(()=>document.getElementById('btn-lightning-undo').classList.remove('show'),12000);
+}
+async function undoLightning(){
+  if(!lightningLastAction){toast('Nada para desfazer');return;}
+  const a=lightningLastAction; lightningLastAction=null;
+  const upd={lastAction:null};
+  upd[a.team===1?'team1Score':'team2Score']=a.prevScore;
+  await stateRef.update(upd);
+  document.getElementById('btn-lightning-undo').classList.remove('show');
+  toast('↩ Relâmpago desfeito');
+}
+
+// ── PAUSE ─────────────────────────────────────────
+async function togglePause(){
+  if(!gs)return;
+  if(gs.screen==='paused'){
+    await stateRef.update({screen:gs.prevScreen||'placar',prevScreen:null});
+  } else {
+    await stateRef.update({screen:'paused',prevScreen:gs.screen});
+  }
+}
+
+// ── GAME CONTROL ──────────────────────────────────
+async function iniciarJogo(){
+  const ok=await showModal('🚀','Iniciar Jogo','O loading vai aparecer no telão e o jogo vai começar!','Iniciar!','success');
+  if(!ok)return;
+  await stateRef.update({screen:'loading',currentRoundIndex:0,currentQuestionIndex:0,team1Score:0,team2Score:0,lastAction:null,lastScoreEvent:null,versiculoState:{active:false},roundHistory:[]});
+  questionHistory=[];
+  toast('Iniciando...');
+  setTimeout(async()=>{try{const s=(await stateRef.get()).data();if(s.screen==='loading')await stateRef.update({screen:'placar'});}catch(e){}},30000);
+}
+async function encerrarJogo(){
+  const ok=await showModal('🏆','Encerrar Jogo','Isso vai declarar o vencedor no telão. Confirmar?','Encerrar!','danger');
+  if(!ok)return;
+  await stateRef.update({screen:'winner'});
+  toast('🏆 Vencedor anunciado!');
+}
+async function voltarInicio(){
+  const ok=await showModal('↩','Voltar ao Início','O placar será zerado e o jogo reiniciado.','Voltar','danger');
+  if(!ok)return;
+  questionHistory=[];
+  await stateRef.update({screen:'inicio',team1Score:0,team2Score:0,currentRoundIndex:0,currentQuestionIndex:0,versiculoState:{active:false},lastAction:null,lastScoreEvent:null,activeChallenge:null,pendingScreen:null,prevScreen:null,roundHistory:[]});
+  toast('Voltando ao início...');
+}
+
+// ── HISTORY ───────────────────────────────────────
+function renderHistory(){
+  const hist=gs?.roundHistory||[];
+  const el=document.getElementById('hist-list');
+  if(!hist.length){el.innerHTML='<div class="hist-empty">Sem histórico ainda</div>';return;}
+  el.innerHTML=hist.map(h=>'<div class="hist-row"><span class="hist-round">'+h.round+'</span><span class="hist-pts t1">'+h.t1+'</span><span class="hist-sep">×</span><span class="hist-pts t2">'+h.t2+'</span></div>').join('');
+}
+
+// ── TIMER ─────────────────────────────────────────
+function toggleTimer(){
+  if(timerRunning){clearInterval(timerInterval);timerRunning=false;updateTimerDisplay();}
+  else{
+    timerRunning=true;
+    document.getElementById('timer-start-btn').textContent='⏸ Pausar';
+    timerInterval=setInterval(()=>{
+      timerRemaining--;
+      updateTimerDisplay();
+      if(timerRemaining<=0){clearInterval(timerInterval);timerRunning=false;document.getElementById('timer-start-btn').textContent='▶ Iniciar';toast('⏰ Tempo esgotado!');}
+    },1000);
+  }
+}
+function resetTimer(){clearInterval(timerInterval);timerRunning=false;timerRemaining=timerDuration;updateTimerDisplay();document.getElementById('timer-start-btn').textContent='▶ Iniciar';}
+function setTimerDuration(){const v=parseInt(document.getElementById('timer-input').value);if(v>0){timerDuration=v;resetTimer();}}
+function updateTimerDisplay(){
+  const m=Math.floor(timerRemaining/60), s=timerRemaining%60;
+  const el=document.getElementById('timer-display');
+  el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  el.className='timer-display '+(timerRunning?timerRemaining<=10?'low':'running':'stopped');
+  document.getElementById('timer-start-btn').textContent=timerRunning?'⏸ Pausar':'▶ Iniciar';
 }
 
 // ── NAMES / RESET ─────────────────────────────────
-async function saveNames() {
-  const t1=document.getElementById('in-t1').value.trim(), t2=document.getElementById('in-t2').value.trim();
-  if (!t1||!t2) { toast('Preencha os dois nomes'); return; }
-  try { await stateRef.update({team1Name:t1,team2Name:t2}); toast('Nomes salvos!'); }
-  catch(e) { showError('Erro: '+e.message); }
+async function saveNames(){
+  const t1=document.getElementById('in-t1').value.trim(),t2=document.getElementById('in-t2').value.trim();
+  if(!t1||!t2){toast('Preencha os dois nomes');return;}
+  try{await stateRef.update({team1Name:t1,team2Name:t2});toast('Nomes salvos!');}
+  catch(e){showError('Erro: '+e.message);}
 }
-async function resetScores() {
-  if (!confirm('Zerar o placar? Não pode ser desfeito.')) return;
+async function resetScores(){
+  const ok=await showModal('🗑','Zerar Placar','Zera a pontuação das duas equipes. Não pode ser desfeito.','Zerar','danger');
+  if(!ok)return;
   await stateRef.update({team1Score:0,team2Score:0,lastAction:null,lastScoreEvent:null});
   toast('Placar zerado');
 }
 
 // ── ROUND MANAGEMENT ──────────────────────────────
-function setRoundType(type, btn) {
+function setRoundType(type,btn){
   newRoundType=type;
-  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('normal-config').style.display   = type==='normal'?'block':'none';
-  document.getElementById('versiculo-config').style.display= type==='versiculo'?'block':'none';
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  document.getElementById('normal-config').style.display=type==='normal'?'block':'none';
+  document.getElementById('versiculo-config').style.display=type==='versiculo'?'block':'none';
 }
-function addPtTag() {
-  const inp=document.getElementById('nr-pt-val'), v=parseInt(inp.value);
-  if (!v||v<=0) { toast('Valor inválido'); return; }
-  newRoundPts.push(v); inp.value=''; renderPtTags();
-}
-function renderPtTags() {
-  document.getElementById('nr-tags').innerHTML=newRoundPts.map((p,i)=>'<div class="pts-tag">+'+p+'<button onclick="rmPtTag('+i+')">✕</button></div>').join('');
-}
+function addPtTag(){const inp=document.getElementById('nr-pt-val'),v=parseInt(inp.value);if(!v||v<=0){toast('Inválido');return;}newRoundPts.push(v);inp.value='';renderPtTags();}
+function renderPtTags(){document.getElementById('nr-tags').innerHTML=newRoundPts.map((p,i)=>'<div class="pts-tag">+'+p+'<button onclick="rmPtTag('+i+')">✕</button></div>').join('');}
 function rmPtTag(i){newRoundPts.splice(i,1);renderPtTags();}
-function addVerseToRound() {
-  const text=document.getElementById('nv-text').value.trim();
-  if (!text) { toast('Digite o versículo'); return; }
-  newVersesList.push({id:Date.now().toString(),text});
-  document.getElementById('nv-text').value='';
-  renderNewVerses();
-}
-function renderNewVerses() {
-  document.getElementById('nv-list').innerHTML=newVersesList.map((v,i)=>'<div class="q-item"><span class="q-item-num">'+(i+1)+'.</span><span class="q-item-text">'+v.text+'</span><button class="q-mini del" onclick="rmVerse('+i+')">✕</button></div>').join('');
-}
+function addVerseToRound(){const text=document.getElementById('nv-text').value.trim();if(!text){toast('Digite o versículo');return;}newVersesList.push({id:Date.now().toString(),text});document.getElementById('nv-text').value='';renderNewVerses();}
+function renderNewVerses(){document.getElementById('nv-list').innerHTML=newVersesList.map((v,i)=>'<div class="q-item"><span class="q-item-num">'+(i+1)+'.</span><span class="q-item-text">'+v.text+'</span><button class="q-mini del" onclick="rmVerse('+i+')">✕</button></div>').join('');}
 function rmVerse(i){newVersesList.splice(i,1);renderNewVerses();}
-
-async function addRound() {
+async function addRound(){
   const name=document.getElementById('nr-name').value.trim();
-  if (!name) { toast('Digite o nome da rodada'); return; }
-  try {
-    const rounds=gs?.rounds||[];
-    let r;
-    if (newRoundType==='versiculo') {
-      if (!newVersesList.length) { toast('Adicione pelo menos um versículo'); return; }
-      r={id:Date.now().toString(),name,type:'versiculo',verses:[...newVersesList]};
-      newVersesList=[]; renderNewVerses();
-    } else {
-      if (!newRoundPts.length) { toast('Adicione pelo menos um valor'); return; }
-      r={id:Date.now().toString(),name,type:'normal',points:[...newRoundPts]};
-      newRoundPts=[]; renderPtTags();
-    }
+  if(!name){toast('Digite o nome');return;}
+  try{
+    const rounds=gs?.rounds||[]; let r;
+    if(newRoundType==='versiculo'){if(!newVersesList.length){toast('Adicione versículos');return;}r={id:Date.now().toString(),name,type:'versiculo',verses:[...newVersesList]};newVersesList=[];renderNewVerses();}
+    else{if(!newRoundPts.length){toast('Adicione pontuação');return;}r={id:Date.now().toString(),name,type:'normal',points:[...newRoundPts]};newRoundPts=[];renderPtTags();}
     await stateRef.update({rounds:[...rounds,r]});
     document.getElementById('nr-name').value='';
     setRoundType('normal',document.getElementById('type-normal'));
     toast('Rodada adicionada!');
-  } catch(e) { showError('Erro: '+e.message); }
+  }catch(e){showError('Erro: '+e.message);}
 }
-
-async function moveRound(i,dir) {
-  const rounds=[...(gs?.rounds||[])], ni=i+dir;
-  if (ni<0||ni>=rounds.length) return;
-  [rounds[i],rounds[ni]]=[rounds[ni],rounds[i]];
-  await stateRef.update({rounds});
+async function moveRound(i,dir){const rounds=[...(gs?.rounds||[])],ni=i+dir;if(ni<0||ni>=rounds.length)return;[rounds[i],rounds[ni]]=[rounds[ni],rounds[i]];await stateRef.update({rounds});}
+async function delRound(i){
+  const ok=await showModal('🗑','Excluir Rodada','Esta ação não pode ser desfeita.','Excluir','danger');if(!ok)return;
+  const rounds=[...(gs?.rounds||[])];rounds.splice(i,1);let idx=gs.currentRoundIndex??0;if(idx>=rounds.length)idx=Math.max(0,rounds.length-1);
+  await stateRef.update({rounds,currentRoundIndex:idx});toast('Rodada excluída');
 }
-
-async function delRound(i) {
-  if (!confirm('Excluir esta rodada?')) return;
-  const rounds=[...(gs?.rounds||[])];
-  rounds.splice(i,1);
-  let idx=gs.currentRoundIndex??0;
-  if(idx>=rounds.length) idx=Math.max(0,rounds.length-1);
-  await stateRef.update({rounds,currentRoundIndex:idx});
-  toast('Rodada excluída');
-}
-
-function renderRounds(rounds) {
+function renderRounds(rounds){
   const el=document.getElementById('rounds-list');
-  if (!rounds.length) { el.innerHTML='<div class="empty">Nenhuma rodada cadastrada</div>'; return; }
+  if(!rounds.length){el.innerHTML='<div class="empty">Nenhuma rodada cadastrada</div>';return;}
   let html='';
   rounds.forEach((r,i)=>{
-    const isVerse=r.type==='versiculo';
-    const items=isVerse?(r.verses||[]):(r.questions||[]);
-    const pts=isVerse?('📖 '+(r.verses||[]).length+' versículo(s)'):((r.points||[]).map(p=>'+'+p).join(' · ')||'Sem pontos')+' · '+(r.questions||[]).length+' pergunta(s)';
-    const emptyTxt=isVerse?'Nenhum versículo ainda':'Nenhuma pergunta ainda';
-    const addPh=isVerse?'Novo versículo...':'Nova pergunta...';
+    const isVerse=r.type==='versiculo', items=isVerse?(r.verses||[]):(r.questions||[]);
+    const pts=isVerse?'📖 '+(r.verses||[]).length+' versículo(s)':((r.points||[]).map(p=>'+'+p).join(' · ')||'Sem pontos')+' · '+(r.questions||[]).length+' pergunta(s)';
     const isOpen=expandedRound===i;
-    const itemsHtml=items.length?items.map((item,qi)=>{
-      return '<div class="q-item" id="qitem-'+i+'-'+qi+'">'
-        +'<span class="q-item-num">'+(qi+1)+'.</span>'
-        +'<span class="q-item-text" id="qtext-'+i+'-'+qi+'">'+item.text+'</span>'
-        +'<div class="q-item-actions">'
-        +'<button class="q-mini" onclick="editQItem('+i+','+qi+')" title="Editar">✏️</button>'
-        +'<button class="q-mini del" onclick="delQItem('+i+','+qi+')" title="Excluir">✕</button>'
-        +'</div></div>';
-    }).join(''):'<div style="color:#d1d5db;font-size:12px;padding:4px 0;">'+emptyTxt+'</div>';
-    const upBtn=i>0?'<button class="mini-btn" onclick="moveRound('+i+',-1)">↑</button>':'<div style="width:32px"></div>';
-    const dnBtn=i<rounds.length-1?'<button class="mini-btn" onclick="moveRound('+i+',1)">↓</button>':'<div style="width:32px"></div>';
-    html+='<div class="list-item" style="flex-wrap:wrap;">'
-      +'<div class="item-num">'+(i+1)+'</div>'
-      +'<div class="item-body"><div class="item-name">'+r.name+'</div><div class="item-sub">'+pts+'</div></div>'
-      +'<div class="item-actions">'
-      +'<button class="round-expand-btn'+(isOpen?' open':'')+'" onclick="toggleExpand('+i+')">📝 Itens</button>'
-      +upBtn+dnBtn
-      +'<button class="mini-btn del" onclick="delRound('+i+')">✕</button>'
-      +'</div>'
-      +'<div class="round-questions-panel'+(isOpen?' open':'')+'" style="width:100%">'
-      +'<div class="q-list">'+itemsHtml+'</div>'
-      +'<div class="q-add-row"><textarea class="q-add-input" id="qadd-'+i+'" placeholder="'+addPh+'" rows="2"></textarea>'
-      +'<button class="q-add-btn" onclick="addQItem('+i+')">+ Add</button></div>'
-      +'</div></div>';
+    const itemsHtml=items.length?items.map((item,qi)=>'<div class="q-item" id="qitem-'+i+'-'+qi+'"><span class="q-item-num">'+(qi+1)+'.</span><span class="q-item-text" id="qtext-'+i+'-'+qi+'">'+item.text+'</span><div class="q-item-actions"><button class="q-mini" onclick="editQItem('+i+','+qi+')">✏️</button><button class="q-mini del" onclick="delQItem('+i+','+qi+')">✕</button></div></div>').join(''):'<div style="color:#d1d5db;font-size:11px;padding:3px 0;">'+(isVerse?'Nenhum versículo':'Nenhuma pergunta')+'</div>';
+    const up=i>0?'<button class="mini-btn" onclick="moveRound('+i+',-1)">↑</button>':'<div style="width:30px"></div>';
+    const dn=i<rounds.length-1?'<button class="mini-btn" onclick="moveRound('+i+',1)">↓</button>':'<div style="width:30px"></div>';
+    html+='<div class="list-item" style="flex-wrap:wrap;"><div class="item-num">'+(i+1)+'</div><div class="item-body"><div class="item-name">'+r.name+'</div><div class="item-sub">'+pts+'</div></div><div class="item-actions"><button class="round-expand-btn'+(isOpen?' open':'')+'" onclick="toggleExpand('+i+')">📝</button>'+up+dn+'<button class="mini-btn del" onclick="delRound('+i+')">✕</button></div><div class="round-questions-panel'+(isOpen?' open':'')+'" style="width:100%"><div class="q-list">'+itemsHtml+'</div><div class="q-add-row"><textarea class="q-add-input" id="qadd-'+i+'" placeholder="'+(isVerse?'Novo versículo...':'Nova pergunta...')+'" rows="2"></textarea><button class="q-add-btn" onclick="addQItem('+i+')">+ Add</button></div></div></div>';
   });
   el.innerHTML=html;
 }
-
 function toggleExpand(i){expandedRound=expandedRound===i?null:i;renderRounds(gs?.rounds||[]);}
-
-async function addQItem(rIdx) {
-  const inp=document.getElementById('qadd-'+rIdx);
-  const text=inp?.value.trim();
-  if (!text) { toast('Digite o conteúdo'); return; }
-  const rounds=[...(gs?.rounds||[])], r={...rounds[rIdx]};
-  const isVerse=r.type==='versiculo', key=isVerse?'verses':'questions';
-  r[key]=[...(r[key]||[]),{id:Date.now().toString(),text}];
-  rounds[rIdx]=r;
-  await stateRef.update({rounds});
-  toast(isVerse?'Versículo adicionado!':'Pergunta adicionada!');
-}
-
-function editQItem(rIdx,qIdx) {
-  const textEl=document.getElementById('qtext-'+rIdx+'-'+qIdx);
-  if (!textEl) return;
-  const cur=textEl.textContent;
-  const item=document.getElementById('qitem-'+rIdx+'-'+qIdx);
-  textEl.outerHTML='<textarea class="q-item-input" id="qedit-'+rIdx+'-'+qIdx+'" rows="2">'+cur+'</textarea>';
-  const editBtn=item.querySelector('.q-mini:not(.del)');
-  if(editBtn) editBtn.outerHTML='<button class="q-mini save" onclick="saveQItem('+rIdx+','+qIdx+')">✓</button>';
-}
-
-async function saveQItem(rIdx,qIdx) {
-  const inp=document.getElementById('qedit-'+rIdx+'-'+qIdx);
-  const text=inp?.value.trim();
-  if (!text) { toast('Não pode ficar vazio'); return; }
-  const rounds=[...(gs?.rounds||[])], r={...rounds[rIdx]};
-  const isVerse=r.type==='versiculo', key=isVerse?'verses':'questions';
-  const items=[...(r[key]||[])];
-  items[qIdx]={...items[qIdx],text};
-  r[key]=items; rounds[rIdx]=r;
-  await stateRef.update({rounds}); toast('Salvo!');
-}
-
-async function delQItem(rIdx,qIdx) {
-  const rounds=[...(gs?.rounds||[])], r={...rounds[rIdx]};
-  const isVerse=r.type==='versiculo', key=isVerse?'verses':'questions';
-  const items=[...(r[key]||[])];
-  items.splice(qIdx,1); r[key]=items; rounds[rIdx]=r;
-  await stateRef.update({rounds}); toast('Removido!');
-}
+async function addQItem(rIdx){const inp=document.getElementById('qadd-'+rIdx);const text=inp?.value.trim();if(!text){toast('Digite');return;}const rounds=[...(gs?.rounds||[])],r={...rounds[rIdx]};const key=r.type==='versiculo'?'verses':'questions';r[key]=[...(r[key]||[]),{id:Date.now().toString(),text}];rounds[rIdx]=r;await stateRef.update({rounds});toast('Adicionado!');}
+function editQItem(rIdx,qIdx){const textEl=document.getElementById('qtext-'+rIdx+'-'+qIdx);if(!textEl)return;const cur=textEl.textContent;const item=document.getElementById('qitem-'+rIdx+'-'+qIdx);textEl.outerHTML='<textarea class="q-item-input" id="qedit-'+rIdx+'-'+qIdx+'" rows="2">'+cur+'</textarea>';const eb=item.querySelector('.q-mini:not(.del)');if(eb)eb.outerHTML='<button class="q-mini save" onclick="saveQItem('+rIdx+','+qIdx+')">✓</button>';}
+async function saveQItem(rIdx,qIdx){const inp=document.getElementById('qedit-'+rIdx+'-'+qIdx);const text=inp?.value.trim();if(!text){toast('Não pode estar vazio');return;}const rounds=[...(gs?.rounds||[])],r={...rounds[rIdx]};const key=r.type==='versiculo'?'verses':'questions';const items=[...(r[key]||[])];items[qIdx]={...items[qIdx],text};r[key]=items;rounds[rIdx]=r;await stateRef.update({rounds});toast('Salvo!');}
+async function delQItem(rIdx,qIdx){const rounds=[...(gs?.rounds||[])],r={...rounds[rIdx]};const key=r.type==='versiculo'?'verses':'questions';const items=[...(r[key]||[])];items.splice(qIdx,1);r[key]=items;rounds[rIdx]=r;await stateRef.update({rounds});toast('Removido!');}
 
 // ── CHALLENGES ────────────────────────────────────
-async function addChallenge() {
-  const text=document.getElementById('nd-text').value.trim();
-  if (!text) { toast('Digite o texto'); return; }
-  const chs=gs?.challenges||[];
-  await stateRef.update({challenges:[...chs,{id:Date.now().toString(),text,used:false}]});
-  document.getElementById('nd-text').value=''; toast('Desafio adicionado!');
-}
-async function moveCh(i,dir) {
-  const chs=[...(gs?.challenges||[])], ni=i+dir;
-  if(ni<0||ni>=chs.length) return;
-  [chs[i],chs[ni]]=[chs[ni],chs[i]]; await stateRef.update({challenges:chs});
-}
-async function delChallenge(i) {
-  if (!confirm('Excluir este desafio?')) return;
-  const chs=[...(gs?.challenges||[])];
-  chs.splice(i,1); await stateRef.update({challenges:chs}); toast('Excluído');
-}
-async function restoreChallenge(i) {
-  const chs=[...(gs?.challenges||[])];
-  chs[i]={...chs[i],used:false}; await stateRef.update({challenges:chs}); toast('Restaurado!');
-}
-
-function renderChallenges(chs) {
+async function addChallenge(){const text=document.getElementById('nd-text').value.trim();if(!text){toast('Digite');return;}const chs=gs?.challenges||[];await stateRef.update({challenges:[...chs,{id:Date.now().toString(),text,used:false}]});document.getElementById('nd-text').value='';toast('Adicionado!');}
+async function moveCh(i,dir){const chs=[...(gs?.challenges||[])],ni=i+dir;if(ni<0||ni>=chs.length)return;[chs[i],chs[ni]]=[chs[ni],chs[i]];await stateRef.update({challenges:chs});}
+async function delChallenge(i){const ok=await showModal('🗑','Excluir Desafio','Esta ação não pode ser desfeita.','Excluir','danger');if(!ok)return;const chs=[...(gs?.challenges||[])];chs.splice(i,1);await stateRef.update({challenges:chs});toast('Excluído');}
+async function restoreChallenge(i){const chs=[...(gs?.challenges||[])];chs[i]={...chs[i],used:false};await stateRef.update({challenges:chs});toast('Restaurado!');}
+function renderChallenges(chs){
   const el=document.getElementById('challenges-list');
-  if (!chs.length) { el.innerHTML='<div class="empty">Nenhum desafio cadastrado</div>'; return; }
+  if(!chs.length){el.innerHTML='<div class="empty">Nenhum desafio</div>';return;}
+  const avail=chs.filter(c=>!c.used).length;
   el.innerHTML=chs.map((c,i)=>{
-    const upBtn=i>0?'<button class="mini-btn" onclick="moveCh('+i+',-1)">↑</button>':'<div style="width:32px"></div>';
-    const dnBtn=i<chs.length-1?'<button class="mini-btn" onclick="moveCh('+i+',1)">↓</button>':'<div style="width:32px"></div>';
-    return '<div class="list-item">'
-      +'<div class="item-num">'+(i+1)+'</div>'
-      +'<div class="item-body"><div class="item-name" style="font-size:13px;line-height:1.4;">'+c.text+'</div></div>'
-      +'<div class="item-actions" style="gap:5px;">'
-      +'<span class="badge '+(c.used?'b-used':'b-ok')+'">'+(c.used?'Usado':'Disponível')+'</span>'
-      +(c.used?'<button class="restore-btn" onclick="restoreChallenge('+i+')">Restaurar</button>':'')
-      +upBtn+dnBtn
-      +'<button class="mini-btn del" onclick="delChallenge('+i+')">✕</button>'
-      +'</div></div>';
+    const up=i>0?'<button class="mini-btn" onclick="moveCh('+i+',-1)">↑</button>':'<div style="width:30px"></div>';
+    const dn=i<chs.length-1?'<button class="mini-btn" onclick="moveCh('+i+',1)">↓</button>':'<div style="width:30px"></div>';
+    return '<div class="list-item"><div class="item-num">'+(i+1)+'</div><div class="item-body"><div class="item-name" style="font-size:12px;line-height:1.4;">'+c.text+'</div></div><div class="item-actions" style="gap:4px;"><span class="badge '+(c.used?'b-used':'b-ok')+'">'+(c.used?'Usado':'✓')+'</span>'+(c.used?'<button class="restore-btn" onclick="restoreChallenge('+i+')">↩</button>':'')+up+dn+'<button class="mini-btn del" onclick="delChallenge('+i+')">✕</button></div></div>';
   }).join('');
 }
 
 // ── FULLSCREEN ────────────────────────────────────
-function enterFullscreen() {
-  const el=document.documentElement;
-  if(el.requestFullscreen) el.requestFullscreen();
-  else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-  document.getElementById('fs-prompt').classList.remove('show');
-}
-function exitFullscreen() {
-  if(document.exitFullscreen) document.exitFullscreen();
-  else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
-}
-function toggleFullscreen() {
-  if(!document.fullscreenElement&&!document.webkitFullscreenElement) enterFullscreen();
-  else exitFullscreen();
-}
+function enterFullscreen(){const el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();document.getElementById('fs-prompt').classList.remove('show');}
+function exitFullscreen(){if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}
+function toggleFullscreen(){if(!document.fullscreenElement&&!document.webkitFullscreenElement)enterFullscreen();else exitFullscreen();}
 ['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{
   const inFs=!!(document.fullscreenElement||document.webkitFullscreenElement);
   document.getElementById('fs-btn').textContent=inFs?'✕⛶':'⛶';
@@ -1068,12 +1034,7 @@ function toggleFullscreen() {
 }));
 
 // ── UTILS ─────────────────────────────────────────
-function showTab(name,btn){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  btn.classList.add('active');
-}
+function showTab(name,btn){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');btn.classList.add('active');}
 let toastT;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2600);}
 function showError(msg){const el=document.getElementById('error-banner');el.textContent='⚠️ '+msg;el.style.display='block';document.getElementById('status-dot').style.background='#dc2626';}
