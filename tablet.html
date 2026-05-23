@@ -81,17 +81,17 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
 #question-control.show{display:block;}
 .qc-counter{font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:1px;margin-bottom:8px;}
 .qc-question{font-size:15px;font-weight:600;color:#111827;line-height:1.5;padding:14px;background:#f9fafb;border-radius:10px;border-left:3px solid #0f1523;margin-bottom:14px;}
-.qc-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-bottom:12px;align-items:start;}
-.qc-col{display:flex;flex-direction:column;gap:5px;}
-.qc-col-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:2px;}
+.qc-teams-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;}
+.qc-both-row{display:flex;gap:8px;justify-content:center;margin-bottom:10px;}
+.qc-col{display:flex;flex-direction:column;gap:6px;}
+.qc-col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:2px;}
 .qc-col.t1 .qc-col-label{color:#2563eb;}.qc-col.t2 .qc-col-label{color:#dc2626;}
-.qc-col-center{display:flex;flex-direction:column;gap:5px;align-items:center;}
-.qc-center-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#6b7280;margin-bottom:2px;}
-.qc-btn{padding:9px 6px;border-radius:9px;border:2px solid;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;transition:all .15s;width:100%;}
+.qc-btn{padding:12px 8px;border-radius:10px;border:2px solid;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;transition:all .15s;width:100%;}
 .qc-btn:active{transform:scale(.95);}
 .qc-btn.t1{border-color:#3b82f6;color:#3b82f6;}.qc-btn.t1:hover{background:#3b82f6;color:#fff;}
 .qc-btn.t2{border-color:#ef4444;color:#ef4444;}.qc-btn.t2:hover{background:#ef4444;color:#fff;}
-.qc-btn.both{border-color:#8b5cf6;color:#8b5cf6;font-size:12px;}.qc-btn.both:hover{background:#8b5cf6;color:#fff;}
+.qc-btn.both{padding:11px 28px;border-radius:10px;border:2px solid #8b5cf6;color:#8b5cf6;background:transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;transition:all .15s;}
+.qc-btn.both:hover{background:#8b5cf6;color:#fff;}
 .qc-skip{padding:12px;border-radius:11px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;width:100%;transition:all .15s;}
 .qc-skip:hover{background:#f3f4f6;}
 .qc-ended{text-align:center;padding:18px;}
@@ -208,6 +208,14 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
 .restore-btn{padding:4px 9px;border-radius:6px;border:1px solid #e5e7eb;background:#fff;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;cursor:pointer;color:#6b7280;}
 .restore-btn:hover{background:#f3f4f6;}
 
+
+/* GAME CONTROL */
+.game-ctrl-row{display:flex;gap:8px;margin-bottom:12px;}
+.start-game-btn{flex:2;padding:14px;border-radius:11px;border:none;background:linear-gradient(135deg,#1e3a5f,#0f1523);color:#fff;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:.5px;}
+.start-game-btn:hover{background:linear-gradient(135deg,#2d5a8f,#1e2a3e);}
+.reset-game-btn{flex:1;padding:14px;border-radius:11px;border:1.5px solid #fecaca;background:#fff;color:#dc2626;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;}
+.reset-game-btn:hover{background:#fef2f2;}
+
 /* TOAST */
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(14px);background:#0f1523;color:#fff;padding:10px 20px;border-radius:11px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:999;pointer-events:none;white-space:nowrap;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -233,6 +241,10 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
 
   <!-- CONTROLE -->
   <div class="tab active" id="tab-controle">
+    <div class="game-ctrl-row">
+      <button class="start-game-btn" onclick="iniciarJogo()">🚀 Iniciar Jogo</button>
+      <button class="reset-game-btn" onclick="voltarInicio()">↩ Voltar ao Início</button>
+    </div>
     <div class="card">
       <div id="round-header">
         <div id="round-info">
@@ -296,6 +308,7 @@ body{font-family:'Montserrat',sans-serif;background:#f0f2f5;color:#111827;height
           <button class="vc-verify-btn" onclick="verifyVerse()">✓ Verificar Resposta</button>
           <button class="vc-next-btn" id="vc-next-btn" onclick="nextVerse()">Próximo →</button>
         </div>
+        <button class="qc-skip" onclick="pularVersiculo()" style="margin-top:8px;">Pular versículo sem pontuar →</button>
       </div>
       <!-- Start button only -->
       <div id="vc-start-area">
@@ -584,12 +597,15 @@ function renderQuestionControl(round, questions) {
   const t1Name = gs.team1Name || 'Equipe 1';
   const t2Name = gs.team2Name || 'Equipe 2';
   document.getElementById('qc-score-grid').innerHTML =
-    '<div class="qc-col t1"><div class="qc-col-label">'+t1Name+'</div>'
+    '<div class="qc-teams-row">'
+    + '<div class="qc-col t1"><div class="qc-col-label">'+t1Name+'</div>'
     + pts.map(p=>'<button class="qc-btn t1" onclick="addScore(1,'+p+')">+'+p+'</button>').join('')+'</div>'
-    + '<div class="qc-col-center"><div class="qc-center-label">Ambas</div>'
-    + pts.map(p=>'<button class="qc-btn both" onclick="scoreBoth('+p+')">+'+p+'</button>').join('')+'</div>'
     + '<div class="qc-col t2"><div class="qc-col-label">'+t2Name+'</div>'
-    + pts.map(p=>'<button class="qc-btn t2" onclick="addScore(2,'+p+')">+'+p+'</button>').join('')+'</div>';
+    + pts.map(p=>'<button class="qc-btn t2" onclick="addScore(2,'+p+')">+'+p+'</button>').join('')+'</div>'
+    + '</div>'
+    + '<div class="qc-both-row">'
+    + pts.map(p=>'<button class="qc-btn both" onclick="scoreBoth('+p+')">Ambas +'+p+'</button>').join('')
+    + '</div>';
 }
 
 function renderPtBtns(team, round, name) {
@@ -750,6 +766,49 @@ async function nextVerse() {
   const nextTeam  = vs.activeTeam===1?2:1;
   const scrambled = shuffleWords(verses[next].text);
   await stateRef.update({versiculoState:{active:true,verseIndex:next,scrambled,selected:[],activeTeam:nextTeam,phase:'selecting',vsTs:Date.now()}});
+}
+
+
+// ── JOGO CONTROL ──────────────────────────────────
+async function iniciarJogo() {
+  if (!confirm('Iniciar o jogo no telão?')) return;
+  await stateRef.update({screen:'loading', currentRoundIndex:0, currentQuestionIndex:0,
+    team1Score:0, team2Score:0, lastAction:null, lastScoreEvent:null,
+    versiculoState:{active:false}});
+  toast('Iniciando...');
+  // Fallback: advance to placar after 8s if telão doesn't do it
+  setTimeout(async()=>{
+    try{const s=(await stateRef.get()).data();if(s.screen==='loading')await stateRef.update({screen:'placar'});}catch(e){}
+  },8500);
+}
+
+async function voltarInicio() {
+  if (!confirm('Voltar ao início? O placar será zerado.')) return;
+  await stateRef.update({
+    screen:'inicio', currentRoundIndex:0, currentQuestionIndex:0,
+    team1Score:0, team2Score:0, lastAction:null, lastScoreEvent:null,
+    activeChallenge:null, versiculoState:{active:false}, pendingScreen:null, prevScreen:null
+  });
+  toast('Voltando ao início...');
+}
+
+async function pularVersiculo() {
+  if (!gs?.versiculoState) return;
+  const vs = gs.versiculoState;
+  const round = (gs.rounds||[])[gs.currentRoundIndex??0];
+  const verses = round?.verses||[];
+  const next = vs.verseIndex + 1;
+  if (next >= verses.length) {
+    await stateRef.update({screen:'placar', versiculoState:{active:false}});
+    toast('Rodada de versículos encerrada!');
+    return;
+  }
+  const nextTeam = vs.activeTeam===1?2:1;
+  const scrambled = shuffleWords(verses[next].text);
+  await stateRef.update({
+    versiculoState:{active:true,verseIndex:next,scrambled,selected:[],activeTeam:nextTeam,phase:'selecting',vsTs:Date.now()}
+  });
+  toast('Versículo pulado — próxima equipe!');
 }
 
 // ── LIGHTNING ─────────────────────────────────────
