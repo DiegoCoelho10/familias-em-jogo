@@ -114,6 +114,27 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 .appear{animation:appear .7s cubic-bezier(.34,1.56,.64,1) forwards;}
 @keyframes appear{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 
+
+/* INICIO SCREEN */
+#ov-inicio{background:var(--bg);}
+.inicio-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,13vh,160px);letter-spacing:14px;color:#fff;line-height:1;text-shadow:0 0 60px rgba(255,255,255,.15);text-align:center;}
+.inicio-sub{font-size:clamp(13px,2vh,22px);font-weight:700;letter-spacing:18px;text-transform:uppercase;color:var(--gold);margin-top:8px;text-shadow:0 0 20px rgba(245,158,11,.5);}
+.inicio-pulse{margin-top:40px;font-size:clamp(14px,2vh,20px);font-weight:600;letter-spacing:6px;text-transform:uppercase;color:rgba(255,255,255,.3);animation:inicioPulse 2s ease-in-out infinite;}
+@keyframes inicioPulse{0%,100%{opacity:.3;}50%{opacity:.8;}}
+
+/* LOADING SCREEN */
+#ov-loading{background:var(--bg);gap:0;}
+.load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;padding:60px;}
+.load-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,9vh,110px);letter-spacing:12px;color:#fff;margin-bottom:6px;text-align:center;}
+.load-sub{font-size:clamp(12px,1.8vh,20px);font-weight:700;letter-spacing:16px;text-transform:uppercase;color:var(--gold);margin-bottom:50px;text-shadow:0 0 20px rgba(245,158,11,.5);}
+.load-bar-wrap{width:55%;height:5px;background:rgba(255,255,255,.1);border-radius:5px;margin-bottom:36px;overflow:hidden;}
+.load-bar{height:100%;background:linear-gradient(to right,var(--t1),var(--gold),var(--t2));border-radius:5px;width:0%;transition:width .8s ease;}
+.load-verse{font-size:clamp(16px,2.4vh,26px);font-weight:600;color:rgba(255,255,255,.55);text-align:center;max-width:70%;line-height:1.6;min-height:80px;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease;}
+.load-verse.fade{opacity:0;}
+.load-files{margin-top:28px;display:flex;flex-direction:column;gap:6px;width:55%;}
+.load-file{font-size:clamp(11px,1.5vh,15px);color:rgba(255,255,255,.2);letter-spacing:1px;font-family:monospace;opacity:0;transition:opacity .4s;}
+.load-file.show{opacity:1;}
+
 /* VERSE OVERLAY */
 #ov-versiculo{background:var(--bg);flex-direction:column;justify-content:flex-start;align-items:stretch;overflow:hidden;}
 .vs-wrap{flex:1;display:flex;flex-direction:column;padding:clamp(12px,2vh,24px) clamp(20px,5vw,80px) 16px;min-height:0;position:relative;overflow:hidden;}
@@ -147,8 +168,8 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 
 <div id="start-screen" onclick="startGame()">
   <div class="ss-title">Famílias em Jogo</div>
-  <div class="ss-sub">Clique para iniciar</div>
-  <div class="ss-pulse">▶</div>
+  <div class="ss-sub">Toque para ativar o som</div>
+  <div class="ss-pulse">🔊</div>
 </div>
 
 <div id="app">
@@ -214,6 +235,23 @@ body::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gr
 <div class="overlay" id="ov-challenge">
   <div class="ch-label">⚡ Desafio Relâmpago ⚡</div>
   <div class="ch-text" id="ch-text">—</div>
+</div>
+
+
+<div class="overlay" id="ov-inicio">
+  <div class="inicio-title">Famílias em Jogo</div>
+  <div class="inicio-sub">O Grande Desafio</div>
+  <div class="inicio-pulse">Aguardando início...</div>
+</div>
+
+<div class="overlay" id="ov-loading">
+  <div class="load-wrap">
+    <div class="load-title">Famílias em Jogo</div>
+    <div class="load-sub">O Grande Desafio</div>
+    <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
+    <div class="load-verse" id="load-verse"></div>
+    <div class="load-files" id="load-files"></div>
+  </div>
 </div>
 
 <div class="overlay" id="ov-versiculo">
@@ -346,6 +384,57 @@ function scoreEffect(team){
   burst(rect.left+rect.width/2, rect.top+rect.height/2, c);
 }
 
+
+// ── LOADING ANIMATION ─────────────────────────────
+const familyVerses = [
+  '"Quanto a mim e à minha casa, serviremos ao Senhor" — Josué 24:15',
+  '"Instrua o jovem no caminho em que deve andar" — Provérbios 22:6',
+  '"Filhos, obedecei a vossos pais no Senhor" — Efésios 6:1',
+  '"Os filhos são herança do Senhor" — Salmos 127:3',
+  '"O amor é paciente, o amor é bondoso" — 1 Coríntios 13:4',
+  '"Honra a teu pai e a tua mãe" — Êxodo 20:12',
+  '"O amor nunca falha" — 1 Coríntios 13:8',
+];
+const loadFiles = [
+  'rodadas.json .............. carregando',
+  'equipes.config ............ carregando',
+  'perguntas.db .............. carregando',
+  'versiculos.data ........... carregando',
+  'desafios.pack ............. carregando',
+  'placar.engine ............. pronto ✓',
+];
+let loadTimer = null;
+
+function startLoadingAnimation() {
+  const bar      = document.getElementById('load-bar');
+  const verseEl  = document.getElementById('load-verse');
+  const filesEl  = document.getElementById('load-files');
+  if (!bar || !verseEl) return;
+  bar.style.width = '0%';
+  verseEl.textContent = '';
+  filesEl.innerHTML   = loadFiles.map(f=>'<div class="load-file">'+f+'</div>').join('');
+  let step = 0;
+  const total = familyVerses.length;
+  verseEl.classList.remove('fade');
+  verseEl.textContent = familyVerses[0];
+  const fileEls = filesEl.querySelectorAll('.load-file');
+  if (loadTimer) clearInterval(loadTimer);
+  loadTimer = setInterval(() => {
+    step++;
+    bar.style.width = Math.min(100,(step/total)*100)+'%';
+    if (step < fileEls.length) fileEls[step-1].classList.add('show');
+    if (step < total) {
+      verseEl.classList.add('fade');
+      setTimeout(()=>{verseEl.textContent=familyVerses[step];verseEl.classList.remove('fade');},500);
+    } else {
+      fileEls.forEach(f=>f.classList.add('show'));
+      clearInterval(loadTimer);loadTimer=null;
+      // Advance to placar after 1.5s more
+      setTimeout(()=>db.doc('game/state').update({screen:'placar'}),1500);
+    }
+  }, 1100);
+}
+
 // ── VERSE SCREEN ───────────────────────────────
 let lastVsPhase = null;
 function renderVerseScreen(s) {
@@ -393,6 +482,11 @@ function renderVerseScreen(s) {
 // ── MAIN LISTENER ──────────────────────────────
 let lastScoreTs=0, lastScreen=null, transTimer=null;
 
+// Auto-show inicio if already set when page loads
+setTimeout(()=>{
+  if(lastScreen==='inicio'){document.getElementById('ov-inicio').classList.add('active');}
+},100);
+
 db.doc('game/state').onSnapshot(snap => {
   if (!snap.exists) return;
   const s = snap.data();
@@ -419,10 +513,15 @@ db.doc('game/state').onSnapshot(snap => {
 
   if (screen !== lastScreen) {
     lastScreen = screen;
-    ['ov-transition','ov-lightning','ov-challenge','ov-versiculo'].forEach(id =>
+    ['ov-inicio','ov-loading','ov-transition','ov-lightning','ov-challenge','ov-versiculo'].forEach(id =>
       document.getElementById(id).classList.remove('active')
     );
-    if (screen === 'transicao') {
+    if (screen === 'inicio') {
+      document.getElementById('ov-inicio').classList.add('active');
+    } else if (screen === 'loading') {
+      document.getElementById('ov-loading').classList.add('active');
+      startLoadingAnimation();
+    } else if (screen === 'transicao') {
       const el = document.getElementById('transition-name');
       el.textContent = rounds[idx]?.name||'—';
       el.classList.remove('slide-in'); void el.offsetWidth; el.classList.add('slide-in');
